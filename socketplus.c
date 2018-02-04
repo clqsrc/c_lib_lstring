@@ -40,6 +40,7 @@ int PASCAL (*_send)(SOCKET,const char*,int,int);
 int PASCAL (*_recv)(SOCKET,char*,int,int);
 int PASCAL (*_select)(int nfds,fd_set*,fd_set*,fd_set*,const struct timeval*);
 struct hostent * PASCAL (*_gethostbyname)(const char*);
+int PASCAL (*_ioctlsocket)(SOCKET,long,u_long *);
 #endif
 
 #ifdef _MSC_VER
@@ -217,6 +218,7 @@ void LoadFunctions_Socket()
 	_recv = LoadFunction(hs, "recv");
 	_select = LoadFunction(hs, "select");
 	_gethostbyname = LoadFunction(hs, "gethostbyname");
+	_ioctlsocket = LoadFunction(hs, "ioctlsocket");
 	
     
 
@@ -407,6 +409,19 @@ int SelectRead_Timeout(SOCKET so, int sec)
   return Result;    
 
 }//
+
+//设置为非阻塞模式 
+void SetNoBlock(SOCKET so)
+{
+	u_long arg = 0; //这里有个问题,32位下是 4 字节,64 位下可能是 8 字节,所以在 64 位环境下大家再自己测试下 
+	
+	//首先，设置通讯为非阻塞模式
+	arg = 1;
+	//ioctlsocket(so, FIONBIO, &arg);
+	_ioctlsocket(so, FIONBIO, &arg);
+
+}//
+
 
 
 #endif
