@@ -41,6 +41,7 @@ int PASCAL (*_recv)(SOCKET,char*,int,int);
 int PASCAL (*_select)(int nfds,fd_set*,fd_set*,fd_set*,const struct timeval*);
 struct hostent * PASCAL (*_gethostbyname)(const char*);
 int PASCAL (*_ioctlsocket)(SOCKET,long,u_long *);
+int PASCAL (*_setsockopt)(SOCKET,int,int,const char*,int);
 #endif
 
 #ifdef _MSC_VER
@@ -219,6 +220,7 @@ void LoadFunctions_Socket()
 	_select = LoadFunction(hs, "select");
 	_gethostbyname = LoadFunction(hs, "gethostbyname");
 	_ioctlsocket = LoadFunction(hs, "ioctlsocket");
+	_setsockopt = LoadFunction(hs, "setsockopt");
 	
     
 
@@ -396,7 +398,7 @@ int SelectRead_Timeout(SOCKET so, int sec)
   //timeout.tv_sec = 0; //秒
   timeout.tv_sec = sec; //秒
   //timeout.tv_usec = 500;  //毫秒,不对是 微秒 
-  //timeout.tv_usec = 0;  //毫秒,不对是 微秒
+  timeout.tv_usec = 0;  //毫秒,不对是 微秒
   
   	//linux 第一个参数一定要赋值
 	////int r = ::select(socket_handle+1, &fd_read, NULL, NULL, &l_timeout);
@@ -420,6 +422,28 @@ void SetNoBlock(SOCKET so)
 	//ioctlsocket(so, FIONBIO, &arg);
 	_ioctlsocket(so, FIONBIO, &arg);
 
+}//
+
+//设置发送超时
+void SetTimeout_send(SOCKET so, int sec)
+{
+	struct timeval timeout; // : TTimeVal;
+	
+	timeout.tv_sec = sec; //秒
+	timeout.tv_usec = 0;  //毫秒,不对是 微秒
+	
+	_setsockopt(so, SOL_SOCKET,SO_SNDTIMEO, (char *)&timeout, sizeof(struct timeval));
+}//
+
+//设置接收超时
+void SetTimeout_recv(SOCKET so, int sec)
+{
+	struct timeval timeout; // : TTimeVal;
+	
+	timeout.tv_sec = sec; //秒
+	timeout.tv_usec = 0;  //毫秒,不对是 微秒
+		
+	_setsockopt(so, SOL_SOCKET,SO_RCVTIMEO, (char *)&timeout, sizeof(struct timeval));
 }//
 
 
