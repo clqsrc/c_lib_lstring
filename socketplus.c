@@ -353,7 +353,7 @@ lstring * RecvBuf(SOCKET so, struct MemPool * pool)
 }//
 
 
-//是否可读取
+//是否可读取,时间//立即返回 
 int SelectRead(SOCKET so)
 {
   fd_set fd_read; //fd_read:TFDSet;
@@ -365,8 +365,36 @@ int SelectRead(SOCKET so)
   FD_SET(so, &fd_read ); //个数受限于 FD_SETSIZE 
 
   timeout.tv_sec = 0; //秒
-  timeout.tv_usec = 500;  //毫秒
-  timeout.tv_usec = 0;  //毫秒
+  timeout.tv_usec = 500;  //毫秒,不对是 微秒 
+  timeout.tv_usec = 0;  //毫秒,不对是 微秒
+  
+  	//linux 第一个参数一定要赋值
+	////int r = ::select(socket_handle+1, &fd_read, NULL, NULL, &l_timeout);
+
+  //if select( 0, &fd_read, nil, nil, &timeout ) > 0 then //至少有1个等待Accept的connection
+  if (_select( so+1, &fd_read, NULL, NULL, &timeout ) > 0) //至少有1个等待Accept的connection
+    Result = 1;
+    
+
+  return Result;    
+
+}//
+
+//是否可读取,时间//超时返回,单位为秒 
+int SelectRead_Timeout(SOCKET so, int sec)
+{
+  fd_set fd_read; //fd_read:TFDSet;
+  struct timeval timeout; // : TTimeVal;
+
+  int Result = 0;
+
+  FD_ZERO( &fd_read );
+  FD_SET(so, &fd_read ); //个数受限于 FD_SETSIZE 
+
+  //timeout.tv_sec = 0; //秒
+  timeout.tv_sec = sec; //秒
+  //timeout.tv_usec = 500;  //毫秒,不对是 微秒 
+  //timeout.tv_usec = 0;  //毫秒,不对是 微秒
   
   	//linux 第一个参数一定要赋值
 	////int r = ::select(socket_handle+1, &fd_read, NULL, NULL, &l_timeout);
