@@ -92,6 +92,7 @@ int _base64_encode(char *in, int inlen, uint8_t *out) {
         memset(temp, 0, 3);
         memcpy(temp, in_block, i + 3 < inlen ? 3 : inlen - i);
         memset(out_block, 0, 4);
+        //memset(out_block, '=', 4); //好象也不用 
  
         out_block[0] = (temp[0] >> 2) & 0x3f;
         out_block[1] = ((temp[0] << 4) & 0x30) | ((temp[1] >> 4) & 0x0f);
