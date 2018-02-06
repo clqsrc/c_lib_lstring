@@ -9,7 +9,6 @@
 #include <string.h>
 
 #include "lstring.c"
-#include "base64.c"
 
 //据说是 gcc 的 strstr 实现,不过其中用到了另外一个函数,效率不可能高 
 char * _strstr1(const char*s1,const char*s2)
@@ -457,42 +456,5 @@ void setlength(lstring * s, int len)
 
 
 }//
-
-
-//base64 解码
-lstring * base64_decode(lstring * s) 
-{
-	lstring * r = NewString("", s->pool);
-	int len = 0;
-
-	//setlength(r, s->len * 2); //按道理应该相等就可以了,这里只是为了安全而已
-	setlength(r, s->len * 2 + 4); //按道理应该相等就可以了,这里只是为了安全而已
-
-	//其实还要判断长度是否为4的倍数
-	len = _base64_decode(s->str, s->len, r->str);
-	r->len = len;
-
-	return r;
-}
-
-//base64 编码
-lstring * base64_encode(lstring * s) 
-{
-	lstring * r = NewString("", s->pool);
-	int len = 0;
-
-	//setlength(r, s->len * 2); //按道理应该相等就可以了,这里只是为了安全而已
-	setlength(r, s->len * 2 + 4); //按道理应该相等就可以了,这里只是为了安全而已
-
-	//其实还要判断长度是否为4的倍数
-	len = _base64_encode(s->str, s->len, r->str);
-	r->len = len;
-
-	return r;
-}
-
-
-
-
 #endif
 
