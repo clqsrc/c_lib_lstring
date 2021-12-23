@@ -4,6 +4,11 @@
 #ifndef _L_STRING_C_
 #define	_L_STRING_C_
 
+#include "lstring.h"
+
+//#define _windows_
+#ifdef _windows_
+
 #include <stdio.h>
 #include <malloc.h> //有些编译,如果 malloc.h 在后面的话会报 malloc 函数冲突,解决办法很简单,把含有 malloc 的头文件放前面,好让我们的 malloc 定义能覆盖它就可以了
 #include <string.h>
@@ -11,8 +16,27 @@
 //#include <winsock.h>
 #include <windows.h>
 #include <time.h>
-//#include <crt/eh.h> //据说 MinGW终于支持使用seh实现c++ eh了 
+//#include <crt/eh.h> //据说 MinGW终于支持使用seh实现c++ eh了
 //https://sourceforge.net/p/mingw-w64/mingw-w64/ci/18a7e88bcbe8bc0de4e07dac934ebf0653c4da7c/tree/mingw-w64-headers/crt/eh.h
+
+
+#endif
+
+//#define _android_
+#ifdef _android_
+
+#include <stdio.h>
+#include <malloc.h> //有些编译,如果 malloc.h 在后面的话会报 malloc 函数冲突,解决办法很简单,把含有 malloc 的头文件放前面,好让我们的 malloc 定义能覆盖它就可以了
+#include <string.h>
+//#include <time.h>
+//#include <winsock.h>
+//#include <windows.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define byte unsigned  char
+
+#endif
 
 int gMallocCount = 0;
 
@@ -23,59 +47,16 @@ void * malloc_v2(size_t size)
 	return malloc(size);
 }
 
-void * free_v2(void * p)
+void free_v2(void * p)
 {
 	gMallocCount--;
 	free(p);
 }
 
-#define malloc malloc_v2
-#define free free_v2
+//内存测试用
+//#define malloc malloc_v2
+//#define free free_v2
 
-typedef struct LString _LString; //相互引用的提前声明好象必须用 typedef
-
-//内存池中的一项//算了, string 的自动释放就很复杂了,还是专注于 string 的吧
-struct MemPool_Item{
-	//void * data; //要释放的数据,可以是不同类型的
-	_LString * data; //要释放的数据,可以是不同类型的
-
-	//void (*FreeFunc)(struct MemPool_Item * item); //对应节点的释放函数//太复杂,就当做原始的 free 函数释放就行了 
-	
-	struct MemPool_Item * next;
-};
-
-//内存池,用于释放一次函数过程中分配的内存 
-struct MemPool{
-
-	struct MemPool_Item * Items;
-    int Count;
-    char * str;
-    byte _const; //是否是只读的,如果是只读的就是从数组中构造的,不要释放它 
-    int id; //只是为调试释放而已 
-
-};
-
-struct LString{
-
-	char * _init; //只是用来判断是否进行了初始化,不可靠的简单判断,为 0 就是初始化了
-
-	int len;
-    char * str;
-    byte _const;  //是否是只读的,如果是只读的就是从数组中构造的,不要释放它
-    byte _malloc; //这个结构是不是 malloc 生成的,如果是还要 free 掉结构体本身
-    struct MemPool * pool; //字符串所在的函数体自动释放内存池,如果是 NULL 就是要手工释放的
-	//在操作字符串的临时函数中可以使用它
-
-
-	void (*Append)(struct LString * s, struct LString * add);
-	void (*AppendConst)(struct LString * s, char * add);
-	//加入传统 C 字符串
-	void (*AppendCString)(struct LString * s, char * str, int len); //LString_AppendCString
-
-
-};
-
-#define mempool struct MemPool 
 
 //函数体临时使用字符串时 
 //#define USEPOOL struct MemPool _function_mem_ = makemem();
@@ -108,7 +89,7 @@ mempool makemem()
 mempool * newmempool()
 {
 	mempool * pmem; 
-	pmem = malloc(sizeof(struct MemPool));
+	pmem = (mempool *)malloc(sizeof(struct MemPool));
 	memset(pmem, 0, sizeof(struct MemPool));
 	
 	srand((unsigned) time(NULL)); //用时间做种，每次产生随机数不一样
@@ -122,14 +103,14 @@ mempool * newmempool()
 void Pool_AddItem(struct MemPool * pool, void * p)
 {
 	struct MemPool_Item * item = NULL;
-	_LString * s = NULL;
+	_LString * s = (_LString *)NULL;
 
 	if (pool == NULL) return;
 	
 	//-------------------------------------------------- 
 	//简单的验证 
 		
-	s = p;//item->data; 
+	s = (_LString *)p;//item->data;
 	
 	if (s->_init != NULL) //简单的初始化检测
 	{
@@ -139,7 +120,7 @@ void Pool_AddItem(struct MemPool * pool, void * p)
 	//-------------------------------------------------- 
 	
 
-	item = malloc(sizeof(struct MemPool_Item));
+	item = (struct MemPool_Item * )malloc(sizeof(struct MemPool_Item));
 	memset(item, 0, sizeof(struct MemPool_Item));
 	
 	//item->FreeFunc = FreeFunc;
@@ -214,7 +195,7 @@ void freemempool(mempool * pool)
 struct LStringRef{
 
     //const struct LBuf * buf; //这个是保存内存内容的地方,不应该变 //本意是让这个指针值固定,但这样导致里面的值也变不了 
-    struct LString * buf; //这个是保存内存内容的地方,不应该变 //C 语言的特点,为了在传递参数时不使用指针,只能是把指针放到成员中 
+    struct LString * buf; //这个潜４婺诖婺谌莸牡胤�,不应该变 //C 语言的特点,为了在传递参数时不使用指针,只能是把指针放到成员中 
     
 	void (*Append)(struct LString * s, struct LString * add);
 	//int (*AppendConst)(struct LString * s, const char * add);
@@ -223,7 +204,7 @@ struct LStringRef{
 
 
 
-#define lstring struct LString 
+
 
 #define PLString struct LString *
 
@@ -458,7 +439,8 @@ void FreePString(lstring * s)
 
 //各个常用函数中尽量使用这个函数分配新字符串,因为它生成的可自动释放,避免 autofree 满天飞
 //这个应该是基础函数,不要使用其他函数实现 
-lstring * NewString(char * str, struct MemPool * pool)
+lstring * NewString(const char * str, struct MemPool * pool)
+//lstring * NewString(const char * str, struct MemPool * pool)
 {
 	
 	//lstring s = String(str);
@@ -685,6 +667,31 @@ int CheckPString(lstring * s)
 	return 1;
 }//
 
+//是否与某个 c 语言字符串相等 //2021.11.01 太常用了而且容易出错，还是给出两个比较函数吧
+int LString_equals_cstr(struct LString * s1, const char * s2)
+{
+    if (s1->len != strlen(s2)) return 0; //长度不等肯定也不是 //加个 strlen 判断会慢一点,不过确保肯定正确
+    
+    //if ( 0 == strcmp(s1->str, s2) ) return 1;
+    if ( 0 == strncmp(s1->str, s2, s1->len) ) return 1;
+
+    return 0;
+}//
+
+//是否与另外一个 lstring 字符串相等
+int LString_equals_lstring(struct LString * s1, lstring * s2)
+{
+    if (s1 == NULL && s2 == NULL) return 1;
+    
+    if (s1 == NULL || s2 == NULL) return 0; //两者不可能都为空的情况下有一个为空,那就是不相等了
+    
+    if (s1->len != s2->len) return 0; //长度不等肯定也不是
+    
+    if ( 0 == strncmp(s1->str, s2->str, s1->len) ) return 1;
+
+    return 0;
+}//
+
 
 
 //绑定各个成员函数
@@ -693,7 +700,9 @@ void BindStringFunctions(lstring * s)
 	printf_err1("BindStringFunctions \r\n");
 	s->Append = LString_Append;
 	s->AppendConst = LString_AppendConst;
-	s->AppendCString = LString_AppendCString;
+    s->AppendCString = LString_AppendCString;
+    s->equals_cstr = LString_equals_cstr;
+    s->equals_lstring = LString_equals_lstring;
 
 }//
 

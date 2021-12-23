@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "lstring.c"
+//#include "lstring.c"
+#include "lstring.h"  //还是分出 .h 文件更方便编译
 
 //据说是 gcc 的 strstr 实现,不过其中用到了另外一个函数,效率不可能高 
 char * _strstr1(const char*s1,const char*s2)
@@ -139,6 +140,16 @@ int pos_c(const char * substr, lstring * s)
 
 }
 
+//是否有子字符串，可以安全的用在 lstring->str 上 //2021.11 很多时候没有的话很不方便
+int FindStr_c(const char * s, const char * sub_s)
+{
+    const char * r = strstr(s, sub_s);
+    
+    if (r) return 1; //找到了
+    
+    return 0; //没找到
+}//
+
 
 //substr(字符串,截取开始位置,截取长度)//从 0 开始 
 //lstring * substr(lstring * s, int start, int len) 
@@ -203,10 +214,10 @@ int str_equals_c(lstring * s1, char * s2)
 #define C1(a1, x, a2) strcmp(a1, a2)
 
 //int ee_-()
-int t()
+void t()
 {
 	C(==);
-	C1("",==,""); //可以这样模拟一个 == 号出来 
+	C1("",==,""); //可以这样模拟一个 == 号出来
 
 }
 
