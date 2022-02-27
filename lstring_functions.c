@@ -246,6 +246,55 @@ lstring * str_replace_ch(lstring * s, char ch, char newch)
 
 }//
 
+//替换长字符//只替换一次，用户可以自己实现全替换，因为全替换效率验证保障，笔者也不太想在优化上纠缠
+//str_replace 
+//其实就是将字符串按分隔符分成两个部分，然后加上//以后再出优化版
+lstring * str_replace_first(lstring * s, lstring * olds, lstring * news)
+{
+	//lstring * r = PStringCopy(s);
+	lstring * r  = NewString("", s->pool);
+	lstring * ls = NewString("", s->pool);
+	lstring * rs = NewString("", s->pool);
+	
+	//int i;
+	
+	int find = string_sp_to2(s, olds, &ls, &rs);
+
+	if (1 == find) {
+		r->Append(r, ls);
+		r->Append(r, news);
+		r->Append(r, rs);
+	}else{
+		return s;
+	}
+	
+	return r;
+
+}//
+
+//以后再优化
+lstring * str_replace(lstring * s, lstring * olds, lstring * news)
+//struct LString * str_replace(struct LString * s, struct LString * olds, struct LString * news)
+{
+	//lstring * r = PStringCopy(s);
+	lstring * r = str_replace_first(s, olds, news);
+	
+	int i;
+	
+	for (i = 0; i < 1024; i++) //死循环保护，只替换 1024 次
+	{
+		int bfind = FindStr_c(r->str, olds->str);
+
+		if (0 == bfind) break;
+
+		r = str_replace_first(r, olds, news);
+	}//
+	
+	
+	return r;
+
+}//
+
 
 //主要用于判断空字符串//delphi 风格 
 int length(lstring * s)
@@ -401,7 +450,8 @@ lstring * get_value_first_c(lstring *s, char * b_sp, char * e_sp)
 
 
 //按分隔符号分成两个字符串 
-void string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
+//2021.11.28 没找到那么左右字符串如何分配？以后再细究。先加一个返回值表示有没有找到
+int string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
 {
 
 	
@@ -428,7 +478,10 @@ void string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
 		ls = NewString("", s->pool); //没找到的情况下左字符串为空,右字符串为原字符串 
 		rs = PStringCopy(s);
 
-		return;
+		*_ls = ls;
+		*_rs = rs;
+
+		return 0;
 	};
 	
 	ls = substring(s, 0, pos1);
@@ -443,7 +496,7 @@ void string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
 	*_rs = rs;
 
 
-
+	return 1;
 } //
 
 //设置字符串长度,用 0 填充 
@@ -455,7 +508,7 @@ void setlength(lstring * s, int len)
 	if (len <= s->len) return;
 	
 
-	tmp = malloc(len + 1); //还要留最后 \0 的位置 
+	tmp = (char *)malloc(len + 1); //还要留最后 \0 的位置 
 	memset(tmp, 0, len + 1);
 	
 	memcpy(tmp, s->str, s->len);

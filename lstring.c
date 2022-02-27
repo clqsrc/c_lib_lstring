@@ -1,22 +1,23 @@
 
-//Ã»°ì·¨»¹ÊÇµÃÁí¶¨ÒåÒ»¸ö×Ö·û´® 
+//æ²¡åŠæ³•è¿˜æ˜¯å¾—å¦å®šä¹‰ä¸€ä¸ªå­—ç¬¦ä¸² 
 
 #ifndef _L_STRING_C_
 #define	_L_STRING_C_
 
 #include "lstring.h"
 
+
 //#define _windows_
 #ifdef _windows_
 
 #include <stdio.h>
-#include <malloc.h> //ÓĞĞ©±àÒë,Èç¹û malloc.h ÔÚºóÃæµÄ»°»á±¨ malloc º¯Êı³åÍ»,½â¾ö°ì·¨ºÜ¼òµ¥,°Ñº¬ÓĞ malloc µÄÍ·ÎÄ¼ş·ÅÇ°Ãæ,ºÃÈÃÎÒÃÇµÄ malloc ¶¨ÒåÄÜ¸²¸ÇËü¾Í¿ÉÒÔÁË
+#include <malloc.h> //æœ‰äº›ç¼–è¯‘,å¦‚æœ malloc.h åœ¨åé¢çš„è¯ä¼šæŠ¥ malloc å‡½æ•°å†²çª,è§£å†³åŠæ³•å¾ˆç®€å•,æŠŠå«æœ‰ malloc çš„å¤´æ–‡ä»¶æ”¾å‰é¢,å¥½è®©æˆ‘ä»¬çš„ malloc å®šä¹‰èƒ½è¦†ç›–å®ƒå°±å¯ä»¥äº†
 #include <string.h>
 //#include <time.h>
 //#include <winsock.h>
 #include <windows.h>
 #include <time.h>
-//#include <crt/eh.h> //¾İËµ MinGWÖÕÓÚÖ§³ÖÊ¹ÓÃsehÊµÏÖc++ ehÁË
+//#include <crt/eh.h> //æ®è¯´ MinGWç»ˆäºæ”¯æŒä½¿ç”¨sehå®ç°c++ ehäº†
 //https://sourceforge.net/p/mingw-w64/mingw-w64/ci/18a7e88bcbe8bc0de4e07dac934ebf0653c4da7c/tree/mingw-w64-headers/crt/eh.h
 
 
@@ -26,7 +27,7 @@
 #ifdef _android_
 
 #include <stdio.h>
-#include <malloc.h> //ÓĞĞ©±àÒë,Èç¹û malloc.h ÔÚºóÃæµÄ»°»á±¨ malloc º¯Êı³åÍ»,½â¾ö°ì·¨ºÜ¼òµ¥,°Ñº¬ÓĞ malloc µÄÍ·ÎÄ¼ş·ÅÇ°Ãæ,ºÃÈÃÎÒÃÇµÄ malloc ¶¨ÒåÄÜ¸²¸ÇËü¾Í¿ÉÒÔÁË
+#include <malloc.h> //æœ‰äº›ç¼–è¯‘,å¦‚æœ malloc.h åœ¨åé¢çš„è¯ä¼šæŠ¥ malloc å‡½æ•°å†²çª,è§£å†³åŠæ³•å¾ˆç®€å•,æŠŠå«æœ‰ malloc çš„å¤´æ–‡ä»¶æ”¾å‰é¢,å¥½è®©æˆ‘ä»¬çš„ malloc å®šä¹‰èƒ½è¦†ç›–å®ƒå°±å¯ä»¥äº†
 #include <string.h>
 //#include <time.h>
 //#include <winsock.h>
@@ -40,7 +41,7 @@
 
 int gMallocCount = 0;
 
-//¼òµ¥µÄÄÚ´æĞ¹Â©¼ì²â
+//ç®€å•çš„å†…å­˜æ³„æ¼æ£€æµ‹
 void * malloc_v2(size_t size)
 {
 	gMallocCount++;
@@ -53,25 +54,25 @@ void free_v2(void * p)
 	free(p);
 }
 
-//ÄÚ´æ²âÊÔÓÃ
+//å†…å­˜æµ‹è¯•ç”¨
 //#define malloc malloc_v2
 //#define free free_v2
 
 
-//º¯ÊıÌåÁÙÊ±Ê¹ÓÃ×Ö·û´®Ê± 
+//å‡½æ•°ä½“ä¸´æ—¶ä½¿ç”¨å­—ç¬¦ä¸²æ—¶ 
 //#define USEPOOL struct MemPool _function_mem_ = makemem();
 
 //#define ENDUSEPOOL Pool_Free(&_function_mem_);
 
-//Êä³ö´òÓ¡µÄ¼¶±ğ 
+//è¾“å‡ºæ‰“å°çš„çº§åˆ« 
 
-//×îÆÕÍ¨µÄ´íÎóĞÅÏ¢ 
+//æœ€æ™®é€šçš„é”™è¯¯ä¿¡æ¯ 
 #define printf_err printf
-//×îµÍ¼¶±ğµÄ´òÓ¡ 
+//æœ€ä½çº§åˆ«çš„æ‰“å° 
 #define printf_err1
 //#define printf_err1 printf
 
-//µÚ¶şµÍ¼¶±ğµÄ´òÓ¡,³£¹æÏÂÊÇ´íÎóµÄÇé¿ö,µ«²»Ò»¶¨ 
+//ç¬¬äºŒä½çº§åˆ«çš„æ‰“å°,å¸¸è§„ä¸‹æ˜¯é”™è¯¯çš„æƒ…å†µ,ä½†ä¸ä¸€å®š 
 //#define printf_err2
 #define printf_err2 printf
 
@@ -80,8 +81,8 @@ mempool makemem()
 	mempool mem; 
 	memset(&mem, 0, sizeof(mem));
 	
-	srand((unsigned) time(NULL)); //ÓÃÊ±¼ä×öÖÖ£¬Ã¿´Î²úÉúËæ»úÊı²»Ò»Ñù
-	mem.id = rand(); //number = rand() % 101; //²úÉú0-100µÄËæ»úÊı
+	srand((unsigned) time(NULL)); //ç”¨æ—¶é—´åšç§ï¼Œæ¯æ¬¡äº§ç”Ÿéšæœºæ•°ä¸ä¸€æ ·
+	mem.id = rand(); //number = rand() % 101; //äº§ç”Ÿ0-100çš„éšæœºæ•°
 	
 	return mem;
 }
@@ -92,14 +93,14 @@ mempool * newmempool()
 	pmem = (mempool *)malloc(sizeof(struct MemPool));
 	memset(pmem, 0, sizeof(struct MemPool));
 	
-	srand((unsigned) time(NULL)); //ÓÃÊ±¼ä×öÖÖ£¬Ã¿´Î²úÉúËæ»úÊı²»Ò»Ñù
-	pmem->id = rand(); //number = rand() % 101; //²úÉú0-100µÄËæ»úÊı
+	srand((unsigned) time(NULL)); //ç”¨æ—¶é—´åšç§ï¼Œæ¯æ¬¡äº§ç”Ÿéšæœºæ•°ä¸ä¸€æ ·
+	pmem->id = rand(); //number = rand() % 101; //äº§ç”Ÿ0-100çš„éšæœºæ•°
 	
 	return pmem;
 }
 
-//Ì«¸´ÔÓ,¾Íµ±×öÒ»¸ö×Ö·û´®³Ø,ÓÃÔÚÒ»¸öº¯ÊıÌå½áÊøÊ±×Ô¶¯ÊÍ·ÅÕâ¸ö¹ı³ÌÖĞ²úÉúµÄËùÓĞÁÙÊ±×Ö·û´®,ÀàËÆÓÚ php µÄ×Ô¶¯ÊÍ·ÅÔ­Àí  
-//¼ÓÈëÒ»¸ö½Úµã, pool ²¢²»·ÖÅäÄÚ´æ,Ö»ÊÇ°Ñ´ó¼Ò¼Óµ½Ò»¸öÁ´±íÖĞÍ³Ò»ÊÍ·Å¶øÒÑ //º¯Êı²ÎÊıµÄ¶¨ÒåµÄº¯ÊıÖ¸ÕëÊÇÒ»ÑùµÄ 
+//å¤ªå¤æ‚,å°±å½“åšä¸€ä¸ªå­—ç¬¦ä¸²æ± ,ç”¨åœ¨ä¸€ä¸ªå‡½æ•°ä½“ç»“æŸæ—¶è‡ªåŠ¨é‡Šæ”¾è¿™ä¸ªè¿‡ç¨‹ä¸­äº§ç”Ÿçš„æ‰€æœ‰ä¸´æ—¶å­—ç¬¦ä¸²,ç±»ä¼¼äº php çš„è‡ªåŠ¨é‡Šæ”¾åŸç†  
+//åŠ å…¥ä¸€ä¸ªèŠ‚ç‚¹, pool å¹¶ä¸åˆ†é…å†…å­˜,åªæ˜¯æŠŠå¤§å®¶åŠ åˆ°ä¸€ä¸ªé“¾è¡¨ä¸­ç»Ÿä¸€é‡Šæ”¾è€Œå·² //å‡½æ•°å‚æ•°çš„å®šä¹‰çš„å‡½æ•°æŒ‡é’ˆæ˜¯ä¸€æ ·çš„ 
 void Pool_AddItem(struct MemPool * pool, void * p)
 {
 	struct MemPool_Item * item = NULL;
@@ -108,13 +109,13 @@ void Pool_AddItem(struct MemPool * pool, void * p)
 	if (pool == NULL) return;
 	
 	//-------------------------------------------------- 
-	//¼òµ¥µÄÑéÖ¤ 
+	//ç®€å•çš„éªŒè¯ 
 		
 	s = (_LString *)p;//item->data;
 	
-	if (s->_init != NULL) //¼òµ¥µÄ³õÊ¼»¯¼ì²â
+	if (s->_init != NULL) //ç®€å•çš„åˆå§‹åŒ–æ£€æµ‹
 	{
-		printf("Pool_AddItem: error Î´³õÊ¼»¯µÄ×Ö·û´®Ö¸Õë!!!\r\n");
+		printf("Pool_AddItem: error æœªåˆå§‹åŒ–çš„å­—ç¬¦ä¸²æŒ‡é’ˆ!!!\r\n");
 	} 	
 	
 	//-------------------------------------------------- 
@@ -124,10 +125,10 @@ void Pool_AddItem(struct MemPool * pool, void * p)
 	memset(item, 0, sizeof(struct MemPool_Item));
 	
 	//item->FreeFunc = FreeFunc;
-	item->data = p;
+	item->data = (_LString *)p;
 	
 	
-	//ÏÂÃæÁ½²½ÊÇÌæ»»µôÍ·½Úµã 
+	//ä¸‹é¢ä¸¤æ­¥æ˜¯æ›¿æ¢æ‰å¤´èŠ‚ç‚¹ 
 	item->next = pool->Items;
 	pool->Items = item;
 	
@@ -135,7 +136,7 @@ void Pool_AddItem(struct MemPool * pool, void * p)
 
 }//
 
-//ÊÍ·ÅÒ»´óÆ¬,¿ÉÒÔ×öĞ©¼òµ¥µÄ¼ì²â
+//é‡Šæ”¾ä¸€å¤§ç‰‡,å¯ä»¥åšäº›ç®€å•çš„æ£€æµ‹
 void Pool_Free(struct MemPool * pool)
 {
 	struct MemPool_Item * item = NULL;
@@ -148,32 +149,32 @@ void Pool_Free(struct MemPool * pool)
 		printf_err1("Pool_Free:%d, %d\r\n", pool->Count, i);
 		item = pool->Items;
 		//item->FreeFunc(item->data);
-		//item->FreeFunc(item); //ÕâÑù¸üÇåÎúÒ»µã
+		//item->FreeFunc(item); //è¿™æ ·æ›´æ¸…æ™°ä¸€ç‚¹
 		
 		s = item->data; 
 		
-		if (s->_init != NULL) //¼òµ¥µÄ³õÊ¼»¯¼ì²â
+		if (s->_init != NULL) //ç®€å•çš„åˆå§‹åŒ–æ£€æµ‹
 		{
-			printf("Pool_Free: error Î´³õÊ¼»¯µÄ×Ö·û´®Ö¸Õë!!!\r\n");
+			printf("Pool_Free: error æœªåˆå§‹åŒ–çš„å­—ç¬¦ä¸²æŒ‡é’ˆ!!!\r\n");
 		} 
 		
 		
 		//free(item->data);
 		free(s->str);
 
-		if (s->_malloc == 1) //½á¹¹Ìå±¾ÉíÒ²ÒªÊÍ·ÅµÄ»° 
+		if (s->_malloc == 1) //ç»“æ„ä½“æœ¬èº«ä¹Ÿè¦é‡Šæ”¾çš„è¯ 
 		free(s);
 		
 		
-		pool->Items = pool->Items->next; //ÏòÏÂÒÆ¶¯Ò»¸öÖ¸ÕëÎ»ÖÃ 
-		free(item); //½Úµã×Ô¼ºµÄÄÚ´æÒ²ÒªÊÍ·Å
+		pool->Items = pool->Items->next; //å‘ä¸‹ç§»åŠ¨ä¸€ä¸ªæŒ‡é’ˆä½ç½® 
+		free(item); //èŠ‚ç‚¹è‡ªå·±çš„å†…å­˜ä¹Ÿè¦é‡Šæ”¾
 	}
 	
 	pool->Count = 0;
 
 }
 
-//×Ô¶¯ÊÍ·Å 
+//è‡ªåŠ¨é‡Šæ”¾ 
 //void autofree(struct MemPool * pool, void * p)
 //{
 //	Pool_AddItem(pool, p);
@@ -194,8 +195,8 @@ void freemempool(mempool * pool)
 
 struct LStringRef{
 
-    //const struct LBuf * buf; //Õâ¸öÊÇ±£´æÄÚ´æÄÚÈİµÄµØ·½,²»Ó¦¸Ã±ä //±¾ÒâÊÇÈÃÕâ¸öÖ¸ÕëÖµ¹Ì¶¨,µ«ÕâÑùµ¼ÖÂÀïÃæµÄÖµÒ²±ä²»ÁË 
-    struct LString * buf; //Õâ¸öÇ±£´æÄÚ´æÄÚÈİµÄµØ·„1¤7,²»Ó¦¸Ã±ä //C ÓïÑÔµÄÌØµã,ÎªÁËÔÚ´«µİ²ÎÊıÊ±²»Ê¹ÓÃÖ¸Õë,Ö»ÄÜÊÇ°ÑÖ¸Õë·Åµ½³ÉÔ±ÖĞ 
+    //const struct LBuf * buf; //è¿™ä¸ªæ˜¯ä¿å­˜å†…å­˜å†…å®¹çš„åœ°æ–¹,ä¸åº”è¯¥å˜ //æœ¬æ„æ˜¯è®©è¿™ä¸ªæŒ‡é’ˆå€¼å›ºå®š,ä½†è¿™æ ·å¯¼è‡´é‡Œé¢çš„å€¼ä¹Ÿå˜ä¸äº† 
+    struct LString * buf; //è¿™ä¸ªæ½œï¼”å©ºè¯–å©ºè°Œè¸ç‰¡èƒ¤?,ä¸åº”è¯¥å˜ //C è¯­è¨€çš„ç‰¹ç‚¹,ä¸ºäº†åœ¨ä¼ é€’å‚æ•°æ—¶ä¸ä½¿ç”¨æŒ‡é’ˆ,åªèƒ½æ˜¯æŠŠæŒ‡é’ˆæ”¾åˆ°æˆå‘˜ä¸­ 
     
 	void (*Append)(struct LString * s, struct LString * add);
 	//int (*AppendConst)(struct LString * s, const char * add);
@@ -212,7 +213,7 @@ struct LStringRef{
 
 //#define GetStr  s.str 
 
-//ÏÂÃæÕâ¼¸¸öºê¿ÉÊÇ¿ÉÒÔÓÃ,²»¹ıÌ«ÈİÒ×³åÍ»ÁË,×îºÃÊÇÂß¼­ÇåÎú¶ÈÒªÇóºÜ¸ßµÄµØ·½²ÅÓÃ 
+//ä¸‹é¢è¿™å‡ ä¸ªå®å¯æ˜¯å¯ä»¥ç”¨,ä¸è¿‡å¤ªå®¹æ˜“å†²çªäº†,æœ€å¥½æ˜¯é€»è¾‘æ¸…æ™°åº¦è¦æ±‚å¾ˆé«˜çš„åœ°æ–¹æ‰ç”¨ 
 #define GetStr  buf->str 
 #define GetLen  buf->len 
 
@@ -224,40 +225,40 @@ struct LStringRef{
 
 
 
-//ÎªÁËÄÜ×Ô¶¯ÊÍ·Å,Ö»ÄÜÊÇÖ¸Õë,½á¹¹ÌåÔÚ²ÎÊı´«µİÊ±»á¶ªÊ§×Ö¶ÎÖµ,ËùÒÔÍêÈ«µÄÄ£·Â C++ ÊÇ²»¿ÉÄÜµÄ 
+//ä¸ºäº†èƒ½è‡ªåŠ¨é‡Šæ”¾,åªèƒ½æ˜¯æŒ‡é’ˆ,ç»“æ„ä½“åœ¨å‚æ•°ä¼ é€’æ—¶ä¼šä¸¢å¤±å­—æ®µå€¼,æ‰€ä»¥å®Œå…¨çš„æ¨¡ä»¿ C++ æ˜¯ä¸å¯èƒ½çš„ 
 
-//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 void BindStringFunctions(lstring * s);
 //lstring String(char * str);
-//¼ÓÈë´«Í³ C ×Ö·û´®
-void LString_AppendCString(lstring * s, char * str, int len);
+//åŠ å…¥ä¼ ç»Ÿ C å­—ç¬¦ä¸²
+void LString_AppendCString(lstring * s, const char * str, int len);
 
 
-//×Ô¶¯ÊÍ·Å//Ö»ÊÍ·Å×Ö·û´® 
+//è‡ªåŠ¨é‡Šæ”¾//åªé‡Šæ”¾å­—ç¬¦ä¸² 
 void autofree_s(struct MemPool * pool, struct LString * s)
 {
 	if (s == NULL) return;
 	
-	s->pool = pool; //¼ÓÉÏÕâ¸ö±êÖ¾,ÕâÑù¸ù¾İÕâ¸ö s ²Ù×÷³öÀ´µÄ string ¶¼¿ÉÒÔÍ¨¹ıËü×Ô¶¯ÊÍ·ÅÁË 
+	s->pool = pool; //åŠ ä¸Šè¿™ä¸ªæ ‡å¿—,è¿™æ ·æ ¹æ®è¿™ä¸ª s æ“ä½œå‡ºæ¥çš„ string éƒ½å¯ä»¥é€šè¿‡å®ƒè‡ªåŠ¨é‡Šæ”¾äº† 
 
 	//Pool_AddItem(pool, p);
 	//Pool_AddItem(pool, s->str);
 	Pool_AddItem(pool, s);
 }
 
-//×Ô¶¯ÊÍ·Å//²»Ö»ÊÍ·Å×Ö·û´®,Á¬Ö¸ÕëÒ»ÆğÊÍ·Å 
+//è‡ªåŠ¨é‡Šæ”¾//ä¸åªé‡Šæ”¾å­—ç¬¦ä¸²,è¿æŒ‡é’ˆä¸€èµ·é‡Šæ”¾ 
 void autofree_pstring(struct MemPool * pool, struct LString * s)
 {
 	if (s == NULL) return;
 	
-	s->pool = pool; //¼ÓÉÏÕâ¸ö±êÖ¾,ÕâÑù¸ù¾İÕâ¸ö s ²Ù×÷³öÀ´µÄ string ¶¼¿ÉÒÔÍ¨¹ıËü×Ô¶¯ÊÍ·ÅÁË 
+	s->pool = pool; //åŠ ä¸Šè¿™ä¸ªæ ‡å¿—,è¿™æ ·æ ¹æ®è¿™ä¸ª s æ“ä½œå‡ºæ¥çš„ string éƒ½å¯ä»¥é€šè¿‡å®ƒè‡ªåŠ¨é‡Šæ”¾äº† 
 
 	Pool_AddItem(pool, s);
 	//Pool_AddItem(pool, s->str);
 }
 
 //
-////·ÖÅä²¢·µ»ØÒ»¸ö×Ö·û´® 
+////åˆ†é…å¹¶è¿”å›ä¸€ä¸ªå­—ç¬¦ä¸² 
 //stringref MakeString(char * str)
 //{
 //	stringref s;
@@ -271,13 +272,13 @@ void autofree_pstring(struct MemPool * pool, struct LString * s)
 //	
 //	if (str != NULL)
 //	{
-//		s.buf->str = malloc(s.buf->len + 1); //»¹ÒªÁô×îºó \0 µÄÎ»ÖÃ 
+//		s.buf->str = malloc(s.buf->len + 1); //è¿˜è¦ç•™æœ€å \0 çš„ä½ç½® 
 //		memset(s.buf->str, 0, s.buf->len + 1);
 //		
 //		strcpy(s.buf->str, str);
 //	}
 //	
-//	//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+//	//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 //	//BindStringFunctions(&s);
 //	
 //	return s;
@@ -285,7 +286,7 @@ void autofree_pstring(struct MemPool * pool, struct LString * s)
 //}//
 //
 
-////·ÖÅä²¢·µ»ØÒ»¸ö×Ö·û´®Ö¸Õë
+////åˆ†é…å¹¶è¿”å›ä¸€ä¸ªå­—ç¬¦ä¸²æŒ‡é’ˆ
 //lstring * PString(lstring s)
 //{
 //	//lstring s = String(str);
@@ -293,7 +294,7 @@ void autofree_pstring(struct MemPool * pool, struct LString * s)
 //	lstring * p = malloc(sizeof(struct LString));
 //	
 //	*p = s;
-//	p->_malloc = 1; //ÒªÊÍ·Å½á¹¹Ìå±¾Éí 
+//	p->_malloc = 1; //è¦é‡Šæ”¾ç»“æ„ä½“æœ¬èº« 
 //	
 //	autofree_pstring(s->pool, p);
 //	
@@ -303,7 +304,7 @@ void autofree_pstring(struct MemPool * pool, struct LString * s)
 //
 
 
-////ÊÍ·Å //pfree ÊÇ·ñÊÍ·ÅÖ¸Õë±¾Éí 
+////é‡Šæ”¾ //pfree æ˜¯å¦é‡Šæ”¾æŒ‡é’ˆæœ¬èº« 
 //void FreeStringRef(stringref * s, int pfree)
 //{
 //	if (s->buf == NULL || s->buf->str == NULL)
@@ -361,22 +362,22 @@ void _FreeString(lstring * s, int pfree)
 	}
 
 	
-	if (pfree)  //ÊÇ·ñÊÍ·ÅÖ¸Õë±¾Éí
+	if (pfree)  //æ˜¯å¦é‡Šæ”¾æŒ‡é’ˆæœ¬èº«
 		free(s);
 
 }//
 
 void FreeString(lstring s)
 {
-	_FreeString(&s, 0); //Ö»ÊÍ·ÅÊı¾İ 
+	_FreeString(&s, 0); //åªé‡Šæ”¾æ•°æ® 
 }
 
 void FreePString(lstring * s)
 {
-	_FreeString(s, 1); //ÊÍ·ÅÊı¾İºÍÖ¸Õë
+	_FreeString(s, 1); //é‡Šæ”¾æ•°æ®å’ŒæŒ‡é’ˆ
 }
 
-////ÊÍ·Å//¸øÄÚ´æ³Øµ÷ÓÃµÄ 
+////é‡Šæ”¾//ç»™å†…å­˜æ± è°ƒç”¨çš„ 
 //void FreeString_ForPool(struct MemPool_Item * poolitem)
 //{
 //	//void * p = poolitem->data;
@@ -384,7 +385,7 @@ void FreePString(lstring * s)
 //	
 //	if (p == NULL) return;
 //
-//	printf("×¼±¸ÊÍ·Å:%s\r\n", p->str);
+//	printf("å‡†å¤‡é‡Šæ”¾:%s\r\n", p->str);
 //	
 //	
 //	FreePString(p);	
@@ -393,7 +394,7 @@ void FreePString(lstring * s)
 //}//
 //
 
-//·ÖÅäÒ»¸öÄÚ´æ³ØÊÍ·ÅµÄ 
+//åˆ†é…ä¸€ä¸ªå†…å­˜æ± é‡Šæ”¾çš„ 
 //lstring * StringPool(struct MemPool * pool, char * str)
 //{
 //	
@@ -403,7 +404,7 @@ void FreePString(lstring * s)
 //	return s;
 //}
 
-//·ÖÅäÒ»¸öÄÚ´æ³ØÊÍ·ÅµÄ 
+//åˆ†é…ä¸€ä¸ªå†…å­˜æ± é‡Šæ”¾çš„ 
 //stringref StringRef(struct MemPool * pool, char * str)
 //{
 //	
@@ -414,7 +415,7 @@ void FreePString(lstring * s)
 //}
 
 
-//ÓÃ½á¹¹Ìå¾Í×ö²»ÁË×Ô¶¯ÊÍ·Å,ËùÒÔ»¹ÊÇÓÃÖ¸Õë°É,±Ï¾¹²»ÊÇ C++ 
+//ç”¨ç»“æ„ä½“å°±åšä¸äº†è‡ªåŠ¨é‡Šæ”¾,æ‰€ä»¥è¿˜æ˜¯ç”¨æŒ‡é’ˆå§,æ¯•ç«Ÿä¸æ˜¯ C++ 
 //lstring String(char * str, struct MemPool * pool)
 //{
 //	
@@ -428,7 +429,7 @@ void FreePString(lstring * s)
 //	
 //	memcpy(s.str, str, s.len);
 //	
-//	//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+//	//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 //	BindStringFunctions(&s);
 //	
 //	autofree_s(pool, s);	
@@ -437,26 +438,26 @@ void FreePString(lstring * s)
 //}
 
 
-//¸÷¸ö³£ÓÃº¯ÊıÖĞ¾¡Á¿Ê¹ÓÃÕâ¸öº¯Êı·ÖÅäĞÂ×Ö·û´®,ÒòÎªËüÉú³ÉµÄ¿É×Ô¶¯ÊÍ·Å,±ÜÃâ autofree ÂúÌì·É
-//Õâ¸öÓ¦¸ÃÊÇ»ù´¡º¯Êı,²»ÒªÊ¹ÓÃÆäËûº¯ÊıÊµÏÖ 
+//å„ä¸ªå¸¸ç”¨å‡½æ•°ä¸­å°½é‡ä½¿ç”¨è¿™ä¸ªå‡½æ•°åˆ†é…æ–°å­—ç¬¦ä¸²,å› ä¸ºå®ƒç”Ÿæˆçš„å¯è‡ªåŠ¨é‡Šæ”¾,é¿å… autofree æ»¡å¤©é£
+//è¿™ä¸ªåº”è¯¥æ˜¯åŸºç¡€å‡½æ•°,ä¸è¦ä½¿ç”¨å…¶ä»–å‡½æ•°å®ç° 
 lstring * NewString(const char * str, struct MemPool * pool)
 //lstring * NewString(const char * str, struct MemPool * pool)
 {
 	
 	//lstring s = String(str);
-	lstring * p = malloc(sizeof(struct LString));
+	lstring * p = (lstring *)malloc(sizeof(struct LString));
 	
 	memset(p, 0, sizeof(struct LString)); 
 	
 	p->_malloc = 1;
 	
 	p->len = strlen(str);
-	p->str = malloc(p->len+1);
+	p->str = (char *)malloc(p->len+1);
 	memset(p->str, 0, p->len+1);
 	
 	memcpy(p->str, str, p->len);
 	
-	//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+	//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 	BindStringFunctions(p);	
 
 	autofree_pstring(pool, p);
@@ -465,7 +466,7 @@ lstring * NewString(const char * str, struct MemPool * pool)
 	return p;
 }
 
-//Ò»°ãÓÃÓÚ²ÎÊı´«µİ
+//ä¸€èˆ¬ç”¨äºå‚æ•°ä¼ é€’
 lstring StringCopy(lstring str)
 {
 	
@@ -475,12 +476,12 @@ lstring StringCopy(lstring str)
 	
 	s.len = str.len;
 
-	s.str = malloc(s.len+1);
+	s.str = (char *)malloc(s.len+1);
 	memset(s.str, 0, s.len+1);
 	
 	memcpy(s.str, str.str, str.len);
 	
-	//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+	//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 	BindStringFunctions(&s);	
 	
 
@@ -489,24 +490,24 @@ lstring StringCopy(lstring str)
 
 
 
-//¸´ÖÆÒ»¸ö×Ö·û´®¸øÁíÍâÒ»¸öÄÚ´æ³Ø,Èç¹û¶Ô·½Îª NULL ÄÇÃ´¾Í±ä³É×ÔÓÉµÄ×Ö·û´®ÁË,²»¹ı×îºÃÊÇ²»ÒªÕâÑù×ö,Ó¦µ±´ÓÉè¼ÆÉÏÒªÇóÃ¿¸ö×Ö·û´®Éú³ÉÊ±¶¼ÓĞmedh³Ø 
+//å¤åˆ¶ä¸€ä¸ªå­—ç¬¦ä¸²ç»™å¦å¤–ä¸€ä¸ªå†…å­˜æ± ,å¦‚æœå¯¹æ–¹ä¸º NULL é‚£ä¹ˆå°±å˜æˆè‡ªç”±çš„å­—ç¬¦ä¸²äº†,ä¸è¿‡æœ€å¥½æ˜¯ä¸è¦è¿™æ ·åš,åº”å½“ä»è®¾è®¡ä¸Šè¦æ±‚æ¯ä¸ªå­—ç¬¦ä¸²ç”Ÿæˆæ—¶éƒ½æœ‰medhæ±  
 lstring * PStringCopyToPool(lstring * s, struct MemPool * pool)
 {
 	
-	lstring * p = malloc(sizeof(struct LString));
+	lstring * p = (lstring *)malloc(sizeof(struct LString));
 	
 	memset(p, 0, sizeof(struct LString));
 	
-	p->_malloc = 1; //½á¹¹Ìå±¾ÉíÊÇ·ÖÅäµÄÄÚ´æ,Ò²ÒªÊÍ·Å 
+	p->_malloc = 1; //ç»“æ„ä½“æœ¬èº«æ˜¯åˆ†é…çš„å†…å­˜,ä¹Ÿè¦é‡Šæ”¾ 
 	
 	p->len = s->len;
 
-	p->str = malloc(s->len+1);
+	p->str = (char *)malloc(s->len+1);
 	memset(p->str, 0, s->len+1);
 	
 	memcpy(p->str, s->str, s->len);
 	
-	//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+	//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 	BindStringFunctions(p);	
 	
 	//if (autofree == 1) autofree_pstring(s->pool, p);
@@ -515,7 +516,7 @@ lstring * PStringCopyToPool(lstring * s, struct MemPool * pool)
 	return p;
 }//
 
-//¸´ÖÆÒ»¸ö×Ö·û´® 
+//å¤åˆ¶ä¸€ä¸ªå­—ç¬¦ä¸² 
 //lstring * PStringCopy(lstring * s, int autofree)
 lstring * PStringCopy(lstring * s)
 {
@@ -525,7 +526,7 @@ lstring * PStringCopy(lstring * s)
 //	
 //	memset(p, 0, sizeof(struct LString));
 //	
-//	p->_malloc = 1; //½á¹¹Ìå±¾ÉíÊÇ·ÖÅäµÄÄÚ´æ,Ò²ÒªÊÍ·Å 
+//	p->_malloc = 1; //ç»“æ„ä½“æœ¬èº«æ˜¯åˆ†é…çš„å†…å­˜,ä¹Ÿè¦é‡Šæ”¾ 
 //	
 //	p->len = s->len;
 //
@@ -534,7 +535,7 @@ lstring * PStringCopy(lstring * s)
 //	
 //	memcpy(p->str, s->str, s->len);
 //	
-//	//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+//	//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 //	BindStringFunctions(p);	
 //	
 //	//if (autofree == 1) 
@@ -544,9 +545,9 @@ lstring * PStringCopy(lstring * s)
 }//
 
 
-//²»·ÖÅäÄÚ´æ,Ö»ÊÇ½«Ò»¸ö»º³åÇø°´ string ·½Ê½²Ù×÷¶øÒÑ,ÀàËÆ golang µÄ bytes ,ËùÒÔ²»ÒªÊÍ·ÅËü 
-//Õâ¸öÒ²ÊÇ»ù´¡º¯Êı ,ËäÈ»ËüµÄÄÚ´æ²»ÓÃÊÍ·Å,µ«Ò²»¹ÊÇÒª´« pool ,ÒÔ±ã¸øÉú³ÉµÄ×Ó×Ö·û´®×Ô¶¯ÊÍ·ÅµÄ»ú»á 
-lstring StringConst(char * str, int len, struct MemPool * pool)
+//ä¸åˆ†é…å†…å­˜,åªæ˜¯å°†ä¸€ä¸ªç¼“å†²åŒºæŒ‰ string æ–¹å¼æ“ä½œè€Œå·²,ç±»ä¼¼ golang çš„ bytes ,æ‰€ä»¥ä¸è¦é‡Šæ”¾å®ƒ 
+//è¿™ä¸ªä¹Ÿæ˜¯åŸºç¡€å‡½æ•° ,è™½ç„¶å®ƒçš„å†…å­˜ä¸ç”¨é‡Šæ”¾,ä½†ä¹Ÿè¿˜æ˜¯è¦ä¼  pool ,ä»¥ä¾¿ç»™ç”Ÿæˆçš„å­å­—ç¬¦ä¸²è‡ªåŠ¨é‡Šæ”¾çš„æœºä¼š 
+lstring StringConst(const char * str, int len, struct MemPool * pool)
 {
 	lstring s;
 	
@@ -555,19 +556,19 @@ lstring StringConst(char * str, int len, struct MemPool * pool)
 	
 	s._const = 1;
 	s.len = len; //strlen(str);
-	s.str = str; //malloc(s.len);
+	s.str = (char * )str; //malloc(s.len);
 	
 	s.pool = pool;
 	
 
-	//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+	//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 	BindStringFunctions(&s);
 	
 	return s;
 
 }//
 
-//Ö¸¶¨³¤¶ÈµÄ,ÊÊºÏº¬ÓĞ \0 µÄ×Ö·û´® 
+//æŒ‡å®šé•¿åº¦çš„,é€‚åˆå«æœ‰ \0 çš„å­—ç¬¦ä¸² 
 lstring * NewStringLen(char * str, int len, struct MemPool * pool)
 {
 	lstring * s = NewString("", pool);
@@ -581,33 +582,33 @@ lstring * NewStringLen(char * str, int len, struct MemPool * pool)
 void LString_Append(lstring * _s, lstring * _add)
 {
 	char * tmp = NULL;
-	lstring s = (*_s); //ÎşÉüÒ»µãµãĞÔÄÜÀ´»»Óï·¨//golang ¾ÍÃ»ÓĞ -> 
-	lstring add = (*_add);//ÎşÉüÒ»µãµãĞÔÄÜÀ´»»Óï·¨//golang ¾ÍÃ»ÓĞ -> 
+	lstring s = (*_s); //ç‰ºç‰²ä¸€ç‚¹ç‚¹æ€§èƒ½æ¥æ¢è¯­æ³•//golang å°±æ²¡æœ‰ -> 
+	lstring add = (*_add);//ç‰ºç‰²ä¸€ç‚¹ç‚¹æ€§èƒ½æ¥æ¢è¯­æ³•//golang å°±æ²¡æœ‰ -> 
 	
 	if (_add->len > 1024 * 1024)
-		printf_err2("\r\n LString_Append() _add lstring error len: %d \r\n", _add->len); //Ì«³¤µÄ×Ö·û´®ºÜ¿ÉÄÜÊÇ´íÎó 
+		printf_err2("\r\n LString_Append() _add lstring error len: %d \r\n", _add->len); //å¤ªé•¿çš„å­—ç¬¦ä¸²å¾ˆå¯èƒ½æ˜¯é”™è¯¯ 
 
 	if (_s->len > 1024 * 1024)
-		printf_err2("\r\n LString_Append() _s   lstring error len: %d \r\n", _s->len); //Ì«³¤µÄ×Ö·û´®ºÜ¿ÉÄÜÊÇ´íÎó 
+		printf_err2("\r\n LString_Append() _s   lstring error len: %d \r\n", _s->len); //å¤ªé•¿çš„å­—ç¬¦ä¸²å¾ˆå¯èƒ½æ˜¯é”™è¯¯ 
 	
 	
 	
-	tmp = malloc(s.len + add.len + 1); //»¹ÒªÁô×îºó \0 µÄÎ»ÖÃ 
+	tmp = (char *)malloc(s.len + add.len + 1); //è¿˜è¦ç•™æœ€å \0 çš„ä½ç½® 
 	memset(tmp, 0, s.len + add.len + 1);
 	
 	memcpy(tmp, s.str, s.len);
-	memcpy(tmp + s.len, add.str, add.len); //ÕâÀïÒª×¢Òâ//¼ÓÉÏºó°ë¶Î 
+	memcpy(tmp + s.len, add.str, add.len); //è¿™é‡Œè¦æ³¨æ„//åŠ ä¸ŠååŠæ®µ 
 	
 	free(s.str);
 
 	s.str = tmp;
 	s.len = s.len + add.len;
 	
-//	char * tmp = malloc(s->len + add->len + 1); //»¹ÒªÁô×îºó \0 µÄÎ»ÖÃ 
+//	char * tmp = malloc(s->len + add->len + 1); //è¿˜è¦ç•™æœ€å \0 çš„ä½ç½® 
 //	memset(tmp, 0, s->len + add->len + 1);
 //	
 //	memcpy(tmp, s->str, s->len);
-//	memcpy(tmp + s->len, add->str, add->len); //ÕâÀïÒª×¢Òâ//¼ÓÉÏºó°ë¶Î 
+//	memcpy(tmp + s->len, add->str, add->len); //è¿™é‡Œè¦æ³¨æ„//åŠ ä¸ŠååŠæ®µ 
 //	
 //	free(s->str);
 //
@@ -620,8 +621,8 @@ void LString_Append(lstring * _s, lstring * _add)
 
 
 
-//¼ÓÈë´«Í³ C ×Ö·û´®
-void LString_AppendCString(lstring * s, char * str, int len)
+//åŠ å…¥ä¼ ç»Ÿ C å­—ç¬¦ä¸²
+void LString_AppendCString(lstring * s, const char * str, int len)
 {
 	lstring add = StringConst(str, len, s->pool);
 
@@ -630,7 +631,7 @@ void LString_AppendCString(lstring * s, char * str, int len)
 	
 }//
 
-void LString_AppendConst(lstring * s, char * add)
+void LString_AppendConst(lstring * s, const char * add)
 {
 
 	//printf("add len:%d", add->len);
@@ -648,18 +649,18 @@ void LString_AppendConst(lstring * s, char * add)
 //	printf("ok");
 //}//
 
-//¼ì²é×Ö·û´®Ö¸ÕëÊÇ·ñºÏ·¨,Ö»ÊÇ¼òµ¥µÄ·½·¨,²»¿É¿¿,µ«ÓĞÒ»¶¨×÷ÓÃ 
+//æ£€æŸ¥å­—ç¬¦ä¸²æŒ‡é’ˆæ˜¯å¦åˆæ³•,åªæ˜¯ç®€å•çš„æ–¹æ³•,ä¸å¯é ,ä½†æœ‰ä¸€å®šä½œç”¨ 
 int CheckPString(lstring * s)
 {
 	if (s == NULL)
 	{
-		printf("CheckPString: error, string is NULL!!!\r\n"); //¾ÍÄ¿Ç°µÄÒª×Ô¶¯ÊÍ·ÅµÄĞèÇóÀ´Ëµ,ÊÇ²»ÄÜÎª NULL µÄ,ÒòÎªÄÇÑù pool ¾ÍÃ»ÓĞ´«ÈëÁË 
+		printf("CheckPString: error, string is NULL!!!\r\n"); //å°±ç›®å‰çš„è¦è‡ªåŠ¨é‡Šæ”¾çš„éœ€æ±‚æ¥è¯´,æ˜¯ä¸èƒ½ä¸º NULL çš„,å› ä¸ºé‚£æ · pool å°±æ²¡æœ‰ä¼ å…¥äº† 
 		return 0;
 	}
 	printf_err1("CheckPString: s->_init != NULL\r\n");
-	if (s->_init != NULL) //ÆäÊµ¶ÔÓÚÏÖ´úµÄ±àÒëÆ÷ºÍ²Ù×÷ÏµÍ³À´Ëµ,Èç¹û s Ã»ÓĞ³õÊ¼»¯,ÔÚÕâÀï¾ÍºÜ¿ÉÄÜ±ÀÀ£,ËùÒÔÊµ¼ÊÉÏÊÇ¼ì²â²»³öÀ´µÄ,ËùÒÔÊ×Î²¶¼´òÓ¡Ò»ÏÂ¿´¿´Õâ¸ö¹ı³ÌÃ»½áÊø¾ÍÊÇÕâÀï³ö´íÁË,¶ÔĞÔÄÜÒªÇó¸ßµÄµØ·½,È¥µô printf ºê¾Í¿ÉÒÔ²»´òÓ¡ÁË
+	if (s->_init != NULL) //å…¶å®å¯¹äºç°ä»£çš„ç¼–è¯‘å™¨å’Œæ“ä½œç³»ç»Ÿæ¥è¯´,å¦‚æœ s æ²¡æœ‰åˆå§‹åŒ–,åœ¨è¿™é‡Œå°±å¾ˆå¯èƒ½å´©æºƒ,æ‰€ä»¥å®é™…ä¸Šæ˜¯æ£€æµ‹ä¸å‡ºæ¥çš„,æ‰€ä»¥é¦–å°¾éƒ½æ‰“å°ä¸€ä¸‹çœ‹çœ‹è¿™ä¸ªè¿‡ç¨‹æ²¡ç»“æŸå°±æ˜¯è¿™é‡Œå‡ºé”™äº†,å¯¹æ€§èƒ½è¦æ±‚é«˜çš„åœ°æ–¹,å»æ‰ printf å®å°±å¯ä»¥ä¸æ‰“å°äº†
 	{
-		printf("CheckPString: error, string is not init!!!\r\n"); //¾ÍÄ¿Ç°µÄÒª×Ô¶¯ÊÍ·ÅµÄĞèÇóÀ´Ëµ,ÊÇ²»ÄÜÎª NULL µÄ,ÒòÎªÄÇÑù pool ¾ÍÃ»ÓĞ´«ÈëÁË 
+		printf("CheckPString: error, string is not init!!!\r\n"); //å°±ç›®å‰çš„è¦è‡ªåŠ¨é‡Šæ”¾çš„éœ€æ±‚æ¥è¯´,æ˜¯ä¸èƒ½ä¸º NULL çš„,å› ä¸ºé‚£æ · pool å°±æ²¡æœ‰ä¼ å…¥äº† 
 		return 0;
 	}
 
@@ -667,10 +668,10 @@ int CheckPString(lstring * s)
 	return 1;
 }//
 
-//ÊÇ·ñÓëÄ³¸ö c ÓïÑÔ×Ö·û´®ÏàµÈ //2021.11.01 Ì«³£ÓÃÁË¶øÇÒÈİÒ×³ö´í£¬»¹ÊÇ¸ø³öÁ½¸ö±È½Ïº¯Êı°É
+//æ˜¯å¦ä¸æŸä¸ª c è¯­è¨€å­—ç¬¦ä¸²ç›¸ç­‰ //2021.11.01 å¤ªå¸¸ç”¨äº†è€Œä¸”å®¹æ˜“å‡ºé”™ï¼Œè¿˜æ˜¯ç»™å‡ºä¸¤ä¸ªæ¯”è¾ƒå‡½æ•°å§
 int LString_equals_cstr(struct LString * s1, const char * s2)
 {
-    if (s1->len != strlen(s2)) return 0; //³¤¶È²»µÈ¿Ï¶¨Ò²²»ÊÇ //¼Ó¸ö strlen ÅĞ¶Ï»áÂıÒ»µã,²»¹ıÈ·±£¿Ï¶¨ÕıÈ·
+    if (s1->len != strlen(s2)) return 0; //é•¿åº¦ä¸ç­‰è‚¯å®šä¹Ÿä¸æ˜¯ //åŠ ä¸ª strlen åˆ¤æ–­ä¼šæ…¢ä¸€ç‚¹,ä¸è¿‡ç¡®ä¿è‚¯å®šæ­£ç¡®
     
     //if ( 0 == strcmp(s1->str, s2) ) return 1;
     if ( 0 == strncmp(s1->str, s2, s1->len) ) return 1;
@@ -678,14 +679,14 @@ int LString_equals_cstr(struct LString * s1, const char * s2)
     return 0;
 }//
 
-//ÊÇ·ñÓëÁíÍâÒ»¸ö lstring ×Ö·û´®ÏàµÈ
+//æ˜¯å¦ä¸å¦å¤–ä¸€ä¸ª lstring å­—ç¬¦ä¸²ç›¸ç­‰
 int LString_equals_lstring(struct LString * s1, lstring * s2)
 {
     if (s1 == NULL && s2 == NULL) return 1;
     
-    if (s1 == NULL || s2 == NULL) return 0; //Á½Õß²»¿ÉÄÜ¶¼Îª¿ÕµÄÇé¿öÏÂÓĞÒ»¸öÎª¿Õ,ÄÇ¾ÍÊÇ²»ÏàµÈÁË
+    if (s1 == NULL || s2 == NULL) return 0; //ä¸¤è€…ä¸å¯èƒ½éƒ½ä¸ºç©ºçš„æƒ…å†µä¸‹æœ‰ä¸€ä¸ªä¸ºç©º,é‚£å°±æ˜¯ä¸ç›¸ç­‰äº†
     
-    if (s1->len != s2->len) return 0; //³¤¶È²»µÈ¿Ï¶¨Ò²²»ÊÇ
+    if (s1->len != s2->len) return 0; //é•¿åº¦ä¸ç­‰è‚¯å®šä¹Ÿä¸æ˜¯
     
     if ( 0 == strncmp(s1->str, s2->str, s1->len) ) return 1;
 
@@ -694,7 +695,7 @@ int LString_equals_lstring(struct LString * s1, lstring * s2)
 
 
 
-//°ó¶¨¸÷¸ö³ÉÔ±º¯Êı
+//ç»‘å®šå„ä¸ªæˆå‘˜å‡½æ•°
 void BindStringFunctions(lstring * s) 
 {
 	printf_err1("BindStringFunctions \r\n");

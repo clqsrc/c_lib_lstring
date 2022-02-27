@@ -11,7 +11,9 @@ extern "C" {
 
 //---------------------------------------------------------------
 //#define _android_
-#define _ios_
+//#define _ios_
+
+#include "base_c.h"
 
 #ifdef _android_
 
@@ -46,6 +48,27 @@ extern "C" {
     #define byte unsigned  char
 
 #endif
+
+#ifdef _windows_
+
+    #include <stdio.h>
+
+    //ios 没有这个？
+    //#include <malloc.h> //有些编译,如果 malloc.h 在后面的话会报 malloc 函数冲突,解决办法很简单,把含有 malloc 的头文件放前面,好让我们的 malloc 定义能覆盖它就可以了
+
+    #include <stdlib.h>  //ios for malloc
+    #include <ctype.h>  //ios for tolower
+
+    #include <string.h>
+    //#include <time.h>
+    //#include <winsock.h>
+    //#include <windows.h>
+    #include <time.h>
+
+    #define byte unsigned  char
+
+#endif
+
 
 //---------------------------------------------------------------
 
@@ -87,7 +110,7 @@ struct LString{
     void (*Append)(struct LString * s, struct LString * add);
     void (*AppendConst)(struct LString * s, const char * add);
     //加入传统 C 字符串
-    void (*AppendCString)(struct LString * s, char * str, int len); //LString_AppendCString
+    void (*AppendCString)(struct LString * s, const char * str, int len); //LString_AppendCString
     
     //是否与某个 c 语言字符串相等 //2021.11.01 太常用了而且容易出错，还是给出两个比较函数吧
     int (*equals_cstr)(struct LString * s1, const char * s2);
@@ -97,9 +120,12 @@ struct LString{
 
 };
 
-#define mempool struct MemPool
+//宏还是要少用，太容易冲突了
+//#define mempool struct MemPool
+typedef struct MemPool mempool;
 
-#define lstring struct LString
+//#define lstring struct LString
+typedef struct LString lstring;
 
 //----------------
 mempool makemem();
@@ -115,15 +141,15 @@ lstring * NewString(const char * str, struct MemPool * pool);
 lstring * NewStringLen(char * str, int len, struct MemPool * pool);
 
 //加入传统 C 字符串
-void LString_AppendCString(lstring * s, char * str, int len);
+void LString_AppendCString(lstring * s, const char * str, int len);
 
-void LString_AppendConst(lstring * s, char * add);
+void LString_AppendConst(lstring * s, const char * add);
 
 //--------------
 //最好不用的函数
 //不分配内存,只是将一个缓冲区按 string 方式操作而已,类似 golang 的 bytes ,所以不要释放它
 //这个也是基础函数 ,虽然它的内存不用释放,但也还是要传 pool ,以便给生成的子字符串自动释放的机会
-lstring StringConst(char * str, int len, struct MemPool * pool);
+lstring StringConst(const char * str, int len, struct MemPool * pool);
 
 //复制一个字符串
 //lstring * PStringCopy(lstring * s, int autofree)
