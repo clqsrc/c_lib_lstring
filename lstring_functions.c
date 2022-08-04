@@ -1,6 +1,6 @@
 
-//²Ù×÷ lstring * µÄ¸÷ÖÖµ×²ãº¯Êı 
-//ÒòÎª lstring °üº¬ÁË´«Í³ C µÄ 0 ½áÎ²,ËùÒÔ´ó²¿·Ö¿ÉÒÔÖ±½Ó´úÓÃ C µÄº¯Êı,µ±È»×îºÃ²ÎÕÕ golang ÖØĞ´
+//æ“ä½œ lstring * çš„å„ç§åº•å±‚å‡½æ•° 
+//å› ä¸º lstring åŒ…å«äº†ä¼ ç»Ÿ C çš„ 0 ç»“å°¾,æ‰€ä»¥å¤§éƒ¨åˆ†å¯ä»¥ç›´æ¥ä»£ç”¨ C çš„å‡½æ•°,å½“ç„¶æœ€å¥½å‚ç…§ golang é‡å†™
 
 #ifndef _L_STRING_FUNCTIONS_C_
 #define	_L_STRING_FUNCTIONS_C_
@@ -9,9 +9,9 @@
 #include <string.h>
 
 //#include "lstring.c"
-#include "lstring.h"  //»¹ÊÇ·Ö³ö .h ÎÄ¼ş¸ü·½±ã±àÒë
+#include "lstring.h"  //è¿˜æ˜¯åˆ†å‡º .h æ–‡ä»¶æ›´æ–¹ä¾¿ç¼–è¯‘
 
-//¾İËµÊÇ gcc µÄ strstr ÊµÏÖ,²»¹ıÆäÖĞÓÃµ½ÁËÁíÍâÒ»¸öº¯Êı,Ğ§ÂÊ²»¿ÉÄÜ¸ß 
+//æ®è¯´æ˜¯ gcc çš„ strstr å®ç°,ä¸è¿‡å…¶ä¸­ç”¨åˆ°äº†å¦å¤–ä¸€ä¸ªå‡½æ•°,æ•ˆç‡ä¸å¯èƒ½é«˜ 
 char * _strstr1(const char*s1,const char*s2)
 {
     const char*p=s1;
@@ -53,39 +53,39 @@ char * _strstr1(const char*s1,const char*s2)
 //
 //}
 
-//¾İËµÓĞÖÖ kmp Ëã·¨¸ü¿ì 
+//æ®è¯´æœ‰ç§ kmp ç®—æ³•æ›´å¿« 
 
-//ËùÒÔÑ¡ÔñÒ»¸ö±È½ÏÕÛÖÔµÄ¼òµ¥Ëã·¨ÈçÏÂ//·µ»ØµÄÊÇÎ»ÖÃ,ÒÔ 0 ¿ªÊ¼ 
-//ËäÈ»ËÙ¶È¿ÉÄÜÂıÒ»µã,²»¹ı¿ÉÒÔ±£Ö¤ÕıÈ· 
-//²»¹ı golang ÀïÒ²ÊÇµ÷ÓÃÁËÒ»¸ö»ãÆªµÄº¯ÊıÀ´ÊµÏÖµÄ,ÒÔºóÓĞ¿ÕÔÙÀ´±È½ÏĞÔÄÜ°É 
+//æ‰€ä»¥é€‰æ‹©ä¸€ä¸ªæ¯”è¾ƒæŠ˜è¡·çš„ç®€å•ç®—æ³•å¦‚ä¸‹//è¿”å›çš„æ˜¯ä½ç½®,ä»¥ 0 å¼€å§‹ 
+//è™½ç„¶é€Ÿåº¦å¯èƒ½æ…¢ä¸€ç‚¹,ä¸è¿‡å¯ä»¥ä¿è¯æ­£ç¡® 
+//ä¸è¿‡ golang é‡Œä¹Ÿæ˜¯è°ƒç”¨äº†ä¸€ä¸ªæ±‡ç¯‡çš„å‡½æ•°æ¥å®ç°çš„,ä»¥åæœ‰ç©ºå†æ¥æ¯”è¾ƒæ€§èƒ½å§ 
 int _strnstr (const char * s, const char * sub, int slen, int sublen)
 {
         const char * cp = s;
         const char * s1, *s2;
         int i,j;
-        int find; //ÊÇ·ñÕÒµ½ÁË,ÓĞÒ»¸ö×Ö·û²»Í¬¾ÍÊÇÃ»ÕÒµ½ 
+        int find; //æ˜¯å¦æ‰¾åˆ°äº†,æœ‰ä¸€ä¸ªå­—ç¬¦ä¸åŒå°±æ˜¯æ²¡æ‰¾åˆ° 
 
-        if (sublen == 0) //×Ó´®Îª¿Õ¾ÍÊÇÃ»ÓĞ 
+        if (sublen == 0) //å­ä¸²ä¸ºç©ºå°±æ˜¯æ²¡æœ‰ 
             return -1;
 
-        for (i=0; i<slen; i++) //±éÀúÃ¿¸ö³¤×Ö·û´®×Ö·û 
+        for (i=0; i<slen; i++) //éå†æ¯ä¸ªé•¿å­—ç¬¦ä¸²å­—ç¬¦ 
         {
                 s1 = cp;
                 s2 = sub;
                 find = 1;
 
-				for (j=0; j<sublen; j++) //±éÀúÃ¿¸ö×Ó×Ö·û´®×Ö·û
+				for (j=0; j<sublen; j++) //éå†æ¯ä¸ªå­å­—ç¬¦ä¸²å­—ç¬¦
 				{
 					//if (*s1 && *s2)
-					if (*s1 != *s2) { find = 0; break;} //ÓĞÒ»¸ö×Ö·û²»Æ¥Åä¾ÍÊÇÃ»ÕÒµ½ 
+					if (*s1 != *s2) { find = 0; break;} //æœ‰ä¸€ä¸ªå­—ç¬¦ä¸åŒ¹é…å°±æ˜¯æ²¡æ‰¾åˆ° 
 						
-					s1++, s2++; //±È½ÏÏÂÒ»¸ö×Ö·û 
+					s1++, s2++; //æ¯”è¾ƒä¸‹ä¸€ä¸ªå­—ç¬¦ 
 				}
 
 
-                //if (!*s2) return(cp);//Õâ¾ä»°µÄÔ­ÒâÊÇ,Èç¹ûÕâÊ± s2 »¹ÓĞ×Ö·û´®¾Í±íÊ¾ÕÒµ½ÁË(Ã»±éÀúÕÒÍê¾ÍÌø³öÁË,ËùÒÔÊÇÕÒµ½) 
+                //if (!*s2) return(cp);//è¿™å¥è¯çš„åŸæ„æ˜¯,å¦‚æœè¿™æ—¶ s2 è¿˜æœ‰å­—ç¬¦ä¸²å°±è¡¨ç¤ºæ‰¾åˆ°äº†(æ²¡éå†æ‰¾å®Œå°±è·³å‡ºäº†,æ‰€ä»¥æ˜¯æ‰¾åˆ°) 
                 
-				if (1 == find) return i; //ÕÒµ½ÁË¾ÍÖ±½ÓÌø³ö 
+				if (1 == find) return i; //æ‰¾åˆ°äº†å°±ç›´æ¥è·³å‡º 
 
                 cp++;
         }
@@ -94,9 +94,9 @@ int _strnstr (const char * s, const char * sub, int slen, int sublen)
 }
 
 
-//delphi ×ª»»·½±ãº¯Êı//µ« C ÓïÑÔË÷ÒıÊÇ´Ó 0 ¿ªÊ¼,²»ÊÇ d7 µÄ´Ó 1 ¿ªÊ¼,Ò»¶¨Òª×¢Òâ
-//²éÕÒ×Ó´®Î»ÖÃ 
-//php µÄ strpos »ù±¾ÉÏÒ²ÊÇÕâÑù 
+//delphi è½¬æ¢æ–¹ä¾¿å‡½æ•°//ä½† C è¯­è¨€ç´¢å¼•æ˜¯ä» 0 å¼€å§‹,ä¸æ˜¯ d7 çš„ä» 1 å¼€å§‹,ä¸€å®šè¦æ³¨æ„
+//æŸ¥æ‰¾å­ä¸²ä½ç½® 
+//php çš„ strpos åŸºæœ¬ä¸Šä¹Ÿæ˜¯è¿™æ · 
 int _pos_v1(lstring * substr, lstring * s) 
 {
 	char * p = strstr(s->str, substr->str);
@@ -105,7 +105,7 @@ int _pos_v1(lstring * substr, lstring * s)
 	if (p == NULL) return -1;
 	
 	r = p - (s->str);
-	if (r >= s->len) r = -1; //Èç¹û s ÊÇ const µÄ»°,ÊÇÓĞ¿ÉÄÜ·¢ÉúÕâÖÖÇé¿ö 
+	if (r >= s->len) r = -1; //å¦‚æœ s æ˜¯ const çš„è¯,æ˜¯æœ‰å¯èƒ½å‘ç”Ÿè¿™ç§æƒ…å†µ 
 
 	//return p - (s->str);
 	return r;
@@ -119,13 +119,13 @@ int pos(lstring * substr, lstring * s)
 //	if (p == NULL) return -1;
 //	
 //	r = p - (s->str);
-//	if (r >= s->len) r = -1; //Èç¹û s ÊÇ const µÄ»°,ÊÇÓĞ¿ÉÄÜ·¢ÉúÕâÖÖÇé¿ö 
+//	if (r >= s->len) r = -1; //å¦‚æœ s æ˜¯ const çš„è¯,æ˜¯æœ‰å¯èƒ½å‘ç”Ÿè¿™ç§æƒ…å†µ 
 
 	return _strnstr(s->str, substr->str, s->len, substr->len);
 }
 
 
-//²éÕÒ×Ó´®Î»ÖÃ 
+//æŸ¥æ‰¾å­ä¸²ä½ç½® 
 int pos_c(const char * substr, lstring * s) 
 {
 //	char * p = strstr(s->str, substr);
@@ -134,24 +134,24 @@ int pos_c(const char * substr, lstring * s)
 //	if (p == NULL) return -1;
 //
 //	r = p - (s->str);
-//	if (r >= s->len) r = -1; //Èç¹û s ÊÇ const µÄ»°,ÊÇÓĞ¿ÉÄÜ·¢ÉúÕâÖÖÇé¿ö 
+//	if (r >= s->len) r = -1; //å¦‚æœ s æ˜¯ const çš„è¯,æ˜¯æœ‰å¯èƒ½å‘ç”Ÿè¿™ç§æƒ…å†µ 
 
 	return _strnstr(s->str, substr, s->len, strlen(substr));
 
 }
 
-//ÊÇ·ñÓĞ×Ó×Ö·û´®£¬¿ÉÒÔ°²È«µÄÓÃÔÚ lstring->str ÉÏ //2021.11 ºÜ¶àÊ±ºòÃ»ÓĞµÄ»°ºÜ²»·½±ã
+//æ˜¯å¦æœ‰å­å­—ç¬¦ä¸²ï¼Œå¯ä»¥å®‰å…¨çš„ç”¨åœ¨ lstring->str ä¸Š //2021.11 å¾ˆå¤šæ—¶å€™æ²¡æœ‰çš„è¯å¾ˆä¸æ–¹ä¾¿
 int FindStr_c(const char * s, const char * sub_s)
 {
     const char * r = strstr(s, sub_s);
     
-    if (r) return 1; //ÕÒµ½ÁË
+    if (r) return 1; //æ‰¾åˆ°äº†
     
-    return 0; //Ã»ÕÒµ½
+    return 0; //æ²¡æ‰¾åˆ°
 }//
 
 
-//substr(×Ö·û´®,½ØÈ¡¿ªÊ¼Î»ÖÃ,½ØÈ¡³¤¶È)//´Ó 0 ¿ªÊ¼ 
+//substr(å­—ç¬¦ä¸²,æˆªå–å¼€å§‹ä½ç½®,æˆªå–é•¿åº¦)//ä» 0 å¼€å§‹ 
 //lstring * substr(lstring * s, int start, int len) 
 lstring * substring(lstring * s, int start, int len) 
 {
@@ -159,16 +159,16 @@ lstring * substring(lstring * s, int start, int len)
 	lstring * sub;
 	char * p = NULL;
 	
-	//if (start + len > s->len) return NULL;//Èç¹ûÌ«¶à
-	if (start + len > s->len) len = (s->len) - start;//Èç¹ûÌ«¶à·µ»ØºóÃæµÄ 
+	//if (start + len > s->len) return NULL;//å¦‚æœå¤ªå¤š
+	if (start + len > s->len) len = (s->len) - start;//å¦‚æœå¤ªå¤šè¿”å›åé¢çš„ 
 	 
 	p = s->str + start;
 	
 	r = StringConst(p, len, s->pool);
-	//r = StringCopy(r); //StringConst ²»·ÖÅäÄÚ´æµÄ,ËùÒÔÒª¸´ÖÆÒ»¸öĞÂµÄ³öÀ´ 
+	//r = StringCopy(r); //StringConst ä¸åˆ†é…å†…å­˜çš„,æ‰€ä»¥è¦å¤åˆ¶ä¸€ä¸ªæ–°çš„å‡ºæ¥ 
 	
 	//sub = PString(r);
-	//autofree_pstring(s->pool, sub);//·µ»Ø×Ö·û´®¸ú×Å s Ò»ÆğÊÍ·Å 
+	//autofree_pstring(s->pool, sub);//è¿”å›å­—ç¬¦ä¸²è·Ÿç€ s ä¸€èµ·é‡Šæ”¾ 
 	
 	sub = PStringCopy(&r);
 	
@@ -176,14 +176,14 @@ lstring * substring(lstring * s, int start, int len)
 
 }
 
-//×Ö·û´®ÊÇ·ñÏàµÈ //ÀàËÆ java µÄ equals
+//å­—ç¬¦ä¸²æ˜¯å¦ç›¸ç­‰ //ç±»ä¼¼ java çš„ equals
 int str_equals(lstring * s1, lstring * s2)
 {
 	if (s1 == NULL && s2 == NULL) return 1;
 	
-	if (s1 == NULL || s2 == NULL) return 0; //Á½Õß²»¿ÉÄÜ¶¼Îª¿ÕµÄÇé¿öÏÂÓĞÒ»¸öÎª¿Õ,ÄÇ¾ÍÊÇ²»ÏàµÈÁË 
+	if (s1 == NULL || s2 == NULL) return 0; //ä¸¤è€…ä¸å¯èƒ½éƒ½ä¸ºç©ºçš„æƒ…å†µä¸‹æœ‰ä¸€ä¸ªä¸ºç©º,é‚£å°±æ˜¯ä¸ç›¸ç­‰äº† 
 	
-	if (s1->len != s2->len) return 0; //³¤¶È²»µÈ¿Ï¶¨Ò²²»ÊÇ 
+	if (s1->len != s2->len) return 0; //é•¿åº¦ä¸ç­‰è‚¯å®šä¹Ÿä¸æ˜¯ 
 	
 	if ( 0 == strncmp(s1->str, s2->str, s1->len) ) return 1;
 
@@ -197,7 +197,7 @@ int streq(lstring * s1, lstring * s2)
 
 int str_equals_c(lstring * s1, char * s2)
 {
-	if (s1->len != strlen(s2)) return 0; //³¤¶È²»µÈ¿Ï¶¨Ò²²»ÊÇ //¼Ó¸ö strlen ÅĞ¶Ï»áÂıÒ»µã,²»¹ıÈ·±£¿Ï¶¨ÕıÈ· 
+	if (s1->len != strlen(s2)) return 0; //é•¿åº¦ä¸ç­‰è‚¯å®šä¹Ÿä¸æ˜¯ //åŠ ä¸ª strlen åˆ¤æ–­ä¼šæ…¢ä¸€ç‚¹,ä¸è¿‡ç¡®ä¿è‚¯å®šæ­£ç¡® 
 	
 	//if ( 0 == strcmp(s1->str, s2) ) return 1;
 	if ( 0 == strncmp(s1->str, s2, s1->len) ) return 1;
@@ -205,9 +205,9 @@ int str_equals_c(lstring * s1, char * s2)
 	return 0;
 }
 
-//3) Ç°¼Ó#£¬½«±ê¼Ç×ª»»Îª×Ö·û´®£®
+//3) å‰åŠ #ï¼Œå°†æ ‡è®°è½¬æ¢ä¸ºå­—ç¬¦ä¸²ï¼
 //#define C(x) #x
-//ÔòC(1+1) ¼´ ¡±1+1¡±£®
+//åˆ™C(1+1) å³ â€1+1â€ï¼
 
 //#define C(x) #x
 #define C(x) 
@@ -217,18 +217,18 @@ int str_equals_c(lstring * s1, char * s2)
 void t()
 {
 	C(==);
-	C1("",==,""); //¿ÉÒÔÕâÑùÄ£ÄâÒ»¸ö == ºÅ³öÀ´
+	C1("",==,""); //å¯ä»¥è¿™æ ·æ¨¡æ‹Ÿä¸€ä¸ª == å·å‡ºæ¥
 
 }
 
-//³£ÓÃ¼òĞ´¶øÒÑ 
+//å¸¸ç”¨ç®€å†™è€Œå·² 
 int seq(lstring * s1, char * s2)
 {
 
 	return str_equals_c(s1, s2);
 }
 
-//Ìæ»»µ¥¸ö×Ö·û,ÔÚĞèÒª¸ßĞ§Ê±Ê¹ÓÃ,ÒòÎªÌæ»»Ò»³¤´®±È½ÏÂı 
+//æ›¿æ¢å•ä¸ªå­—ç¬¦,åœ¨éœ€è¦é«˜æ•ˆæ—¶ä½¿ç”¨,å› ä¸ºæ›¿æ¢ä¸€é•¿ä¸²æ¯”è¾ƒæ…¢ 
 //str_replace 
 lstring * str_replace_ch(lstring * s, char ch, char newch)
 {
@@ -246,9 +246,9 @@ lstring * str_replace_ch(lstring * s, char ch, char newch)
 
 }//
 
-//Ìæ»»³¤×Ö·û//Ö»Ìæ»»Ò»´Î£¬ÓÃ»§¿ÉÒÔ×Ô¼ºÊµÏÖÈ«Ìæ»»£¬ÒòÎªÈ«Ìæ»»Ğ§ÂÊÑéÖ¤±£ÕÏ£¬±ÊÕßÒ²²»Ì«ÏëÔÚÓÅ»¯ÉÏ¾À²ø
+//æ›¿æ¢é•¿å­—ç¬¦//åªæ›¿æ¢ä¸€æ¬¡ï¼Œç”¨æˆ·å¯ä»¥è‡ªå·±å®ç°å…¨æ›¿æ¢ï¼Œå› ä¸ºå…¨æ›¿æ¢æ•ˆç‡éªŒè¯ä¿éšœï¼Œç¬”è€…ä¹Ÿä¸å¤ªæƒ³åœ¨ä¼˜åŒ–ä¸Šçº ç¼ 
 //str_replace 
-//ÆäÊµ¾ÍÊÇ½«×Ö·û´®°´·Ö¸ô·û·Ö³ÉÁ½¸ö²¿·Ö£¬È»ºó¼ÓÉÏ//ÒÔºóÔÙ³öÓÅ»¯°æ
+//å…¶å®å°±æ˜¯å°†å­—ç¬¦ä¸²æŒ‰åˆ†éš”ç¬¦åˆ†æˆä¸¤ä¸ªéƒ¨åˆ†ï¼Œç„¶ååŠ ä¸Š//ä»¥åå†å‡ºä¼˜åŒ–ç‰ˆ
 lstring * str_replace_first(lstring * s, lstring * olds, lstring * news)
 {
 	//lstring * r = PStringCopy(s);
@@ -272,7 +272,7 @@ lstring * str_replace_first(lstring * s, lstring * olds, lstring * news)
 
 }//
 
-//ÒÔºóÔÙÓÅ»¯
+//ä»¥åå†ä¼˜åŒ–
 lstring * str_replace(lstring * s, lstring * olds, lstring * news)
 //struct LString * str_replace(struct LString * s, struct LString * olds, struct LString * news)
 {
@@ -281,7 +281,7 @@ lstring * str_replace(lstring * s, lstring * olds, lstring * news)
 	
 	int i;
 	
-	for (i = 0; i < 1024; i++) //ËÀÑ­»·±£»¤£¬Ö»Ìæ»» 1024 ´Î
+	for (i = 0; i < 1024; i++) //æ­»å¾ªç¯ä¿æŠ¤ï¼Œåªæ›¿æ¢ 1024 æ¬¡
 	{
 		int bfind = FindStr_c(r->str, olds->str);
 
@@ -296,7 +296,7 @@ lstring * str_replace(lstring * s, lstring * olds, lstring * news)
 }//
 
 
-//Ö÷ÒªÓÃÓÚÅĞ¶Ï¿Õ×Ö·û´®//delphi ·ç¸ñ 
+//ä¸»è¦ç”¨äºåˆ¤æ–­ç©ºå­—ç¬¦ä¸²//delphi é£æ ¼ 
 int length(lstring * s)
 {
 	if (s == NULL) return 0;
@@ -304,13 +304,13 @@ int length(lstring * s)
 	return s->len;
 }
 
-//delphi ·ç¸ñ 
+//delphi é£æ ¼ 
 int Length(lstring * s)
 {
 	return length(s);
 }
 
-//Ö÷ÒªÓÃÓÚÅĞ¶Ï¿Õ×Ö·û´®//golang ·ç¸ñ 
+//ä¸»è¦ç”¨äºåˆ¤æ–­ç©ºå­—ç¬¦ä¸²//golang é£æ ¼ 
 int len(lstring * s)
 {
 	if (s == NULL) return 0;
@@ -318,72 +318,72 @@ int len(lstring * s)
 	return s->len;
 }
 
-//×ª»»ÎªĞ¡Ğ´,×¢ÒâÕâ¸öÔÚÖĞÎÄÏÂ»áÓĞÎÊÌâ//ÎªÁË¼æÈİ×Ö·û´®×Ô¶¯ÊÍ·Å,µ±²ÎÊıÎª¿ÕÊ±Ö»ºÃ·µ»Ø¿Õ,Òª²»ÕÒ²»µ½¸¸½Úµã 
+//è½¬æ¢ä¸ºå°å†™,æ³¨æ„è¿™ä¸ªåœ¨ä¸­æ–‡ä¸‹ä¼šæœ‰é—®é¢˜//ä¸ºäº†å…¼å®¹å­—ç¬¦ä¸²è‡ªåŠ¨é‡Šæ”¾,å½“å‚æ•°ä¸ºç©ºæ—¶åªå¥½è¿”å›ç©º,è¦ä¸æ‰¾ä¸åˆ°çˆ¶èŠ‚ç‚¹ 
 lstring * lowercase(lstring * s)
 {
 	lstring * r = NULL;
 	int i;
 	if (s == NULL)
 	{
-		printf("lowercase: error, string is NULL!!!"); //¾ÍÄ¿Ç°µÄÒª×Ô¶¯ÊÍ·ÅµÄĞèÇóÀ´Ëµ,ÊÇ²»ÄÜÎª NULL µÄ,ÒòÎªÄÇÑù pool ¾ÍÃ»ÓĞ´«ÈëÁË 
+		printf("lowercase: error, string is NULL!!!"); //å°±ç›®å‰çš„è¦è‡ªåŠ¨é‡Šæ”¾çš„éœ€æ±‚æ¥è¯´,æ˜¯ä¸èƒ½ä¸º NULL çš„,å› ä¸ºé‚£æ · pool å°±æ²¡æœ‰ä¼ å…¥äº† 
 		return NULL;
 	}
 	
-	//¼ì²é×Ö·û´®Ö¸ÕëÊÇ·ñºÏ·¨,Ö»ÊÇ¼òµ¥µÄ·½·¨,²»¿É¿¿,µ«ÓĞÒ»¶¨×÷ÓÃ 
+	//æ£€æŸ¥å­—ç¬¦ä¸²æŒ‡é’ˆæ˜¯å¦åˆæ³•,åªæ˜¯ç®€å•çš„æ–¹æ³•,ä¸å¯é ,ä½†æœ‰ä¸€å®šä½œç”¨ 
 	CheckPString(s);
 	
 	r = PStringCopy(s);
-	//r->pool = s->pool; //ÈÃÔ­×Ö·û´®ÊÍ·ÅËü
-	//autofree_pstring(s->pool, r); //ÈÃÔ­×Ö·û´®ÊÍ·ÅËü
+	//r->pool = s->pool; //è®©åŸå­—ç¬¦ä¸²é‡Šæ”¾å®ƒ
+	//autofree_pstring(s->pool, r); //è®©åŸå­—ç¬¦ä¸²é‡Šæ”¾å®ƒ
 	
 	for (i = 0; i < r->len; i++) 
 	{
 		r->str[i] = tolower(r->str[i]);
 	}
 	
-	//Ã»ÓĞ·µ»ØÖµ,È·ÊµÓĞÎÊÌâ 
+	//æ²¡æœ‰è¿”å›å€¼,ç¡®å®æœ‰é—®é¢˜ 
 	
 	return r;
 }
 
-//×ª»»Îª´óĞ´,×¢ÒâÕâ¸öÔÚÖĞÎÄÏÂ»áÓĞÎÊÌâ//ÎªÁË¼æÈİ×Ö·û´®×Ô¶¯ÊÍ·Å,µ±²ÎÊıÎª¿ÕÊ±Ö»ºÃ·µ»Ø¿Õ,Òª²»ÕÒ²»µ½¸¸½Úµã 
+//è½¬æ¢ä¸ºå¤§å†™,æ³¨æ„è¿™ä¸ªåœ¨ä¸­æ–‡ä¸‹ä¼šæœ‰é—®é¢˜//ä¸ºäº†å…¼å®¹å­—ç¬¦ä¸²è‡ªåŠ¨é‡Šæ”¾,å½“å‚æ•°ä¸ºç©ºæ—¶åªå¥½è¿”å›ç©º,è¦ä¸æ‰¾ä¸åˆ°çˆ¶èŠ‚ç‚¹ 
 lstring * uppercase(lstring * s)
 {
 	lstring * r = NULL;
 	int i;
 	if (s == NULL)
 	{
-		printf("lowercase: error, string is NULL!!!"); //¾ÍÄ¿Ç°µÄÒª×Ô¶¯ÊÍ·ÅµÄĞèÇóÀ´Ëµ,ÊÇ²»ÄÜÎª NULL µÄ,ÒòÎªÄÇÑù pool ¾ÍÃ»ÓĞ´«ÈëÁË 
+		printf("lowercase: error, string is NULL!!!"); //å°±ç›®å‰çš„è¦è‡ªåŠ¨é‡Šæ”¾çš„éœ€æ±‚æ¥è¯´,æ˜¯ä¸èƒ½ä¸º NULL çš„,å› ä¸ºé‚£æ · pool å°±æ²¡æœ‰ä¼ å…¥äº† 
 		return NULL;
 	}
 	
-	//¼ì²é×Ö·û´®Ö¸ÕëÊÇ·ñºÏ·¨,Ö»ÊÇ¼òµ¥µÄ·½·¨,²»¿É¿¿,µ«ÓĞÒ»¶¨×÷ÓÃ 
+	//æ£€æŸ¥å­—ç¬¦ä¸²æŒ‡é’ˆæ˜¯å¦åˆæ³•,åªæ˜¯ç®€å•çš„æ–¹æ³•,ä¸å¯é ,ä½†æœ‰ä¸€å®šä½œç”¨ 
 	CheckPString(s);
 	
 	r = PStringCopy(s);
-	//r->pool = s->pool; //ÈÃÔ­×Ö·û´®ÊÍ·ÅËü
-	//autofree_pstring(s->pool, r); //ÈÃÔ­×Ö·û´®ÊÍ·ÅËü
+	//r->pool = s->pool; //è®©åŸå­—ç¬¦ä¸²é‡Šæ”¾å®ƒ
+	//autofree_pstring(s->pool, r); //è®©åŸå­—ç¬¦ä¸²é‡Šæ”¾å®ƒ
 	
 	for (i = 0; i < r->len; i++) 
 	{
 		r->str[i] = toupper(r->str[i]);
 	}
 	
-	//Ã»ÓĞ·µ»ØÖµ,È·ÊµÓĞÎÊÌâ 
+	//æ²¡æœ‰è¿”å›å€¼,ç¡®å®æœ‰é—®é¢˜ 
 	
 	return r;
 }
 
 
-//Óë´«Í³ get_value ²»Í¬,Õâ¸öµÄÆ¥Åä½áÎ²×Ö·û´®Îª²éÕÒ»¥µÄµÚÒ»¸ö¶ø²»ÊÇ×îºóÒ»¸ö
-//Ó¦¸Ã²»Çø·Ö´óĞ¡Ğ´
-//Òª×¢Òâ C ÓïÑÔµÄ×Ö·û´®ÊÇ´Ó 0 ÆğÊ¼,¶øÔ­À´ delphi µÄÊÇ´Ó 1 ÆğÊ¼µÄ,ËùÒÔ d7 ×ª»»¹ıÀ´µÄËã·¨²»ÄÜÈ«²¿ÕÕ°áµÄ
+//ä¸ä¼ ç»Ÿ get_value ä¸åŒ,è¿™ä¸ªçš„åŒ¹é…ç»“å°¾å­—ç¬¦ä¸²ä¸ºæŸ¥æ‰¾äº’çš„ç¬¬ä¸€ä¸ªè€Œä¸æ˜¯æœ€åä¸€ä¸ª
+//åº”è¯¥ä¸åŒºåˆ†å¤§å°å†™
+//è¦æ³¨æ„ C è¯­è¨€çš„å­—ç¬¦ä¸²æ˜¯ä» 0 èµ·å§‹,è€ŒåŸæ¥ delphi çš„æ˜¯ä» 1 èµ·å§‹çš„,æ‰€ä»¥ d7 è½¬æ¢è¿‡æ¥çš„ç®—æ³•ä¸èƒ½å…¨éƒ¨ç…§æ¬çš„
 lstring * get_value_first(lstring *s, lstring * b_sp, lstring * e_sp)
 {
 	
-	//¿ªÊ¼¸´ÖÆµÄÎ»ÖÃ
+	//å¼€å§‹å¤åˆ¶çš„ä½ç½®
 	int b_pos = 0;
-	//¸´ÖÆ½áÊøµÄÎ»ÖÃ
+	//å¤åˆ¶ç»“æŸçš„ä½ç½®
 	int e_pos = 0;
 	lstring * ls;
 	lstring * r = NULL;
@@ -394,7 +394,7 @@ lstring * get_value_first(lstring *s, lstring * b_sp, lstring * e_sp)
 	b_sp = lowercase(b_sp);
 	e_sp = lowercase(e_sp);
 
-	//¼ì²é×Ö·û´®Ö¸ÕëÊÇ·ñºÏ·¨,Ö»ÊÇ¼òµ¥µÄ·½·¨,²»¿É¿¿,µ«ÓĞÒ»¶¨×÷ÓÃ
+	//æ£€æŸ¥å­—ç¬¦ä¸²æŒ‡é’ˆæ˜¯å¦åˆæ³•,åªæ˜¯ç®€å•çš„æ–¹æ³•,ä¸å¯é ,ä½†æœ‰ä¸€å®šä½œç”¨
 	CheckPString(ls);
 	CheckPString(b_sp);
 	CheckPString(e_sp);
@@ -406,10 +406,10 @@ lstring * get_value_first(lstring *s, lstring * b_sp, lstring * e_sp)
 	if (length(b_sp) == 0) b_pos = 0;
 
 	//if (b_pos == 0)
-	if (b_pos == -1) //Ã»ÕÒµ½
+	if (b_pos == -1) //æ²¡æ‰¾åˆ°
 	{
 		r = NewString("", s->pool);
-		//autofree_pstring(s->pool, r); //·µ»ØµÄ×Ö·û´®¸ú×Å s Ò»ÆğÊÍ·Å
+		//autofree_pstring(s->pool, r); //è¿”å›çš„å­—ç¬¦ä¸²è·Ÿç€ s ä¸€èµ·é‡Šæ”¾
 		return r;
 	};
 
@@ -430,14 +430,14 @@ lstring * get_value_first(lstring *s, lstring * b_sp, lstring * e_sp)
 	return r;
 }
 
-//c ÓïÑÔµÄ²ÎÊı 
+//c è¯­è¨€çš„å‚æ•° 
 lstring * getValueFirst_c(lstring *s, char * b_sp, char * e_sp)
 {
 	return get_value_first(s, NewString(b_sp, s->pool), NewString(e_sp, s->pool));
 
 }
 
-//c ÓïÑÔµÄ²ÎÊı 
+//c è¯­è¨€çš„å‚æ•° 
 lstring * get_value_first_c(lstring *s, char * b_sp, char * e_sp)
 {
 	return get_value_first(s, NewString(b_sp, s->pool), NewString(e_sp, s->pool));
@@ -449,15 +449,15 @@ lstring * get_value_first_c(lstring *s, char * b_sp, char * e_sp)
 
 
 
-//°´·Ö¸ô·ûºÅ·Ö³ÉÁ½¸ö×Ö·û´® 
-//2021.11.28 Ã»ÕÒµ½ÄÇÃ´×óÓÒ×Ö·û´®ÈçºÎ·ÖÅä£¿ÒÔºóÔÙÏ¸¾¿¡£ÏÈ¼ÓÒ»¸ö·µ»ØÖµ±íÊ¾ÓĞÃ»ÓĞÕÒµ½
+//æŒ‰åˆ†éš”ç¬¦å·åˆ†æˆä¸¤ä¸ªå­—ç¬¦ä¸² 
+//2021.11.28 æ²¡æ‰¾åˆ°é‚£ä¹ˆå·¦å³å­—ç¬¦ä¸²å¦‚ä½•åˆ†é…ï¼Ÿä»¥åå†ç»†ç©¶ã€‚å…ˆåŠ ä¸€ä¸ªè¿”å›å€¼è¡¨ç¤ºæœ‰æ²¡æœ‰æ‰¾åˆ°
 int string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
 {
 
 	
-	//¿ªÊ¼¸´ÖÆµÄÎ»ÖÃ
+	//å¼€å§‹å¤åˆ¶çš„ä½ç½®
 	int pos1 = 0;
-	//¸´ÖÆ½áÊøµÄÎ»ÖÃ
+	//å¤åˆ¶ç»“æŸçš„ä½ç½®
 	int pos2 = 0;
 	int len1, len2;
 	lstring * ls;
@@ -465,7 +465,7 @@ int string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
 	//lstring * t;
 	
 
-	//¼ì²é×Ö·û´®Ö¸ÕëÊÇ·ñºÏ·¨,Ö»ÊÇ¼òµ¥µÄ·½·¨,²»¿É¿¿,µ«ÓĞÒ»¶¨×÷ÓÃ
+	//æ£€æŸ¥å­—ç¬¦ä¸²æŒ‡é’ˆæ˜¯å¦åˆæ³•,åªæ˜¯ç®€å•çš„æ–¹æ³•,ä¸å¯é ,ä½†æœ‰ä¸€å®šä½œç”¨
 	CheckPString(s);
 	CheckPString(sp);
 	//CheckPString(e_sp);
@@ -473,9 +473,9 @@ int string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
 
 	pos1 = pos(sp, s);
 
-	if (pos1 == -1) //Ã»ÕÒµ½
+	if (pos1 == -1) //æ²¡æ‰¾åˆ°
 	{
-		ls = NewString("", s->pool); //Ã»ÕÒµ½µÄÇé¿öÏÂ×ó×Ö·û´®Îª¿Õ,ÓÒ×Ö·û´®ÎªÔ­×Ö·û´® 
+		ls = NewString("", s->pool); //æ²¡æ‰¾åˆ°çš„æƒ…å†µä¸‹å·¦å­—ç¬¦ä¸²ä¸ºç©º,å³å­—ç¬¦ä¸²ä¸ºåŸå­—ç¬¦ä¸² 
 		rs = PStringCopy(s);
 
 		*_ls = ls;
@@ -499,7 +499,7 @@ int string_sp_to2(lstring * s, lstring * sp, lstring ** _ls, lstring ** _rs)
 	return 1;
 } //
 
-//ÉèÖÃ×Ö·û´®³¤¶È,ÓÃ 0 Ìî³ä 
+//è®¾ç½®å­—ç¬¦ä¸²é•¿åº¦,ç”¨ 0 å¡«å…… 
 void setlength(lstring * s, int len)
 {
 	
@@ -508,7 +508,7 @@ void setlength(lstring * s, int len)
 	if (len <= s->len) return;
 	
 
-	tmp = (char *)malloc(len + 1); //»¹ÒªÁô×îºó \0 µÄÎ»ÖÃ 
+	tmp = (char *)malloc(len + 1); //è¿˜è¦ç•™æœ€å \0 çš„ä½ç½® 
 	memset(tmp, 0, len + 1);
 	
 	memcpy(tmp, s->str, s->len);
