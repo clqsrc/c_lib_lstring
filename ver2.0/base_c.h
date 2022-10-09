@@ -35,7 +35,10 @@ typedef void * chandle; //base_handle;  //所谓句柄。其实就是指针啦
 #ifdef _qt_
     #ifndef int64_t
         #ifndef INT64_C
-        typedef long long int64_t;
+            //64 位 windows 下目前 qt5 中的 _WIN32 也是有效的
+            #ifdef _WIN32
+            typedef long long int64_t;
+            #endif
         #endif
     #endif
 #endif
