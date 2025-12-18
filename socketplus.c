@@ -55,6 +55,8 @@ int  (PASCAL *_send)(SOCKET,const char*,int,int);
 int  (PASCAL *_recv)(SOCKET,char*,int,int);
 int  (PASCAL *_select)(int nfds,fd_set*,fd_set*,fd_set*,const struct timeval*);
 struct hostent *  (PASCAL *_gethostbyname)(const char*);
+int (PASCAL * _ioctlsocket)(SOCKET, long, u_long*);
+int (PASCAL * _setsockopt)(SOCKET, int, int, const char*, int);
 #endif
 
 //-------------------------------------------------- 
