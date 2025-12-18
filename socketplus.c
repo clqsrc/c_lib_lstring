@@ -12,7 +12,7 @@
 #include <winsock.h>
 //#include <>
 
-#include "lstring.c"
+//#include "lstring.c"
 
 //#pragma comment (lib,"*.lib")
 //#pragma comment (lib,"libwsock32.a")
@@ -55,8 +55,12 @@ int  (PASCAL *_send)(SOCKET,const char*,int,int);
 int  (PASCAL *_recv)(SOCKET,char*,int,int);
 int  (PASCAL *_select)(int nfds,fd_set*,fd_set*,fd_set*,const struct timeval*);
 struct hostent *  (PASCAL *_gethostbyname)(const char*);
+//2025 add
+//_ioctlsocket = LoadFunction(hs, "ioctlsocket");
+//_setsockopt = LoadFunction(hs, "setsockopt");
 int (PASCAL * _ioctlsocket)(SOCKET, long, u_long*);
 int (PASCAL * _setsockopt)(SOCKET, int, int, const char*, int);
+int (PASCAL* _closesocket)(SOCKET s);
 #endif
 
 //-------------------------------------------------- 
@@ -188,8 +192,13 @@ FARPROC WINAPI LoadFunction(HINSTANCE h, LPCSTR fun_name)
 	
 	r = GetProcAddress(h, fun_name);
 	
-	if (r == 0) printf("load function %s error\r\n", fun_name);
-	else printf("load function %s ok\r\n", fun_name);	
+	if (r == 0) {
+		printf("load function %s error\r\n", fun_name);
+		MessageBoxA(0, fun_name, "load function error", 0);
+	} else {
+		printf("load function %s ok\r\n", fun_name);
+		
+	}
 
 	return r;
 }//
@@ -223,7 +232,8 @@ void LoadFunctions_Socket()
 	_gethostbyname = LoadFunction(hs, "gethostbyname");
 	_ioctlsocket = LoadFunction(hs, "ioctlsocket");
 	_setsockopt = LoadFunction(hs, "setsockopt");
-	
+	_closesocket = LoadFunction(hs, "closesocket");
+
     
 
 }
@@ -321,11 +331,19 @@ int SendBuf(SOCKET so, char * s, int len)
 
 }//
 
+
+
 int Recv(SOCKET so, char* buf, int size)
 {
 	return _recv(so, buf, size, 0);
 }
 
+int CloseConect(SOCKET s)
+{
+	return _closesocket(s);
+}
+
+/*
 //注意,返回的字符串要自己释放 
 //lstring RecvBuf(SOCKET so)
 //算了,还是传可自动释放的字符串进去方便点 
@@ -362,7 +380,7 @@ lstring * RecvBuf(SOCKET so, struct MemPool * pool)
   return s;
 
 }//
-
+*/
 
 //是否可读取,时间//立即返回 
 int SelectRead(SOCKET so)
