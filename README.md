@@ -20,3 +20,39 @@
 其实主要是增加了访问已释放或者未分配内存的检测，这在 C 语言里是最常见的错误。改动并不多，不过因为 ver1.0 已经在大量项目中成功应用了，备份一个独立的目录，以防万一。
 
 新项目应该尽量使用 ver2.0
+
+--------------------------------------------------------
+* socketplus.c 
+
+* 是我经常来写网络协议分析程序的简单库，非常方便简单。
+
+简单示例
+
+```C
+
+
+if (0 == _socket_init_) {
+	LoadFunctions_Socket();
+	InitWinSocket();
+
+	_socket_init_ = 1;
+}
+
+int so = CreateTcpClient();
+ConnectHost(so, (char *)"www.test.com", 80);
+
+std::string cmd;
+cmd = "GET / HTTP/1.0\r\n\r\n";
+
+SendBuf(so, (char *)cmd.data(), cmd.length());
+
+std::vector<char> buf;
+buf.resize(1024, 0);
+// 填充整个vector为0
+std::fill(buf.begin(), buf.end(), 0);
+
+int r = Recv(so, buf.data(), buf.size());
+
+```
+
+
