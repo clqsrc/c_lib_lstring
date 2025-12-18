@@ -1,6 +1,6 @@
 
-//ä¸€ä¸ªæ–¹ä¾¿æµ‹è¯• socket ç¨‹åºçš„å°æ–‡ä»¶,çœå¾—è€æ˜¯æ‰¾ lib a æ–‡ä»¶ 
-//ç›®å‰æ˜¯ gcc ä¸“ç”¨,å¦‚æœ vc è¦ç”¨å¦å¤–å¼„ä¸€ä¸ªå¥½äº†,ä¸è¦åœ¨è¿™ä¸Šé¢å¼„æ¡ä»¶ç¼–è¯‘ 
+//Ò»¸ö·½±ã²âÊÔ socket ³ÌĞòµÄĞ¡ÎÄ¼ş,Ê¡µÃÀÏÊÇÕÒ lib a ÎÄ¼ş 
+//Ä¿Ç°ÊÇ gcc ×¨ÓÃ,Èç¹û vc ÒªÓÃÁíÍâÅªÒ»¸öºÃÁË,²»ÒªÔÚÕâÉÏÃæÅªÌõ¼ş±àÒë 
 
 
 #ifndef _SOCKET_PLUS_C_
@@ -19,18 +19,18 @@
 //#pragma comment (lib,"libwsock32.a")
 
 
-// ç³»ç»Ÿé”™è¯¯ä¿¡æ¯æç¤º
+// ÏµÍ³´íÎóĞÅÏ¢ÌáÊ¾
 void PrintError(DWORD last_err);
 
 //--------------------------------------------------
-//ç›´æ¥å¼•å…¥çš„ dll å‡½æ•° 
+//Ö±½ÓÒıÈëµÄ dll º¯Êı 
 
 //SOCKET PASCAL socket(int,int,int);
 //char * (*fun1)(char * p1,char * p2);
 #ifndef _MSC_VER
-//å¾ˆå¤šåŒå­¦ä¸ä¼šå†™å‡½æ•°æŒ‡é’ˆå£°æ˜//å‡½æ•°æŒ‡é’ˆçš„å†™æ³•æ˜¯,å…ˆå†™æ­£å¸¸çš„å‡½æ•°å£°æ˜,ç„¶åå°†å‡½æ•°ååŠ ä¸Šæ‹¬å·,ç„¶ååœ¨å‡½æ•°åå‰å†åŠ ä¸Š*å·å³å¯!!! 
+//ºÜ¶àÍ¬Ñ§²»»áĞ´º¯ÊıÖ¸ÕëÉùÃ÷//º¯ÊıÖ¸ÕëµÄĞ´·¨ÊÇ,ÏÈĞ´Õı³£µÄº¯ÊıÉùÃ÷,È»ºó½«º¯ÊıÃû¼ÓÉÏÀ¨ºÅ,È»ºóÔÚº¯ÊıÃûÇ°ÔÙ¼ÓÉÏ*ºÅ¼´¿É!!! 
 SOCKET PASCAL (*_socket)(int,int,int);
-//SOCKET (PASCAL *_socket)(int,int,int); //vc è¦è¿™æ ·å†™,vc6,vc2010 éƒ½æ˜¯å¦‚æ­¤ //å°±æ˜¯å°† PASCAL æˆ–è€… stdcall æ”¾åˆ°å‡½æ•°åçš„æ‹¬å·ä¸­ 
+//SOCKET (PASCAL *_socket)(int,int,int); //vc ÒªÕâÑùĞ´,vc6,vc2010 ¶¼ÊÇÈç´Ë //¾ÍÊÇ½« PASCAL »òÕß stdcall ·Åµ½º¯ÊıÃûµÄÀ¨ºÅÖĞ 
 int PASCAL (*_WSAStartup)(WORD,LPWSADATA);
 unsigned long PASCAL (*_inet_addr)(const char*);
 u_short PASCAL (*_htons)(u_short);
@@ -45,7 +45,7 @@ int PASCAL (*_setsockopt)(SOCKET,int,int,const char*,int);
 #endif
 
 #ifdef _MSC_VER
-SOCKET (PASCAL *_socket)(int,int,int); //vc è¦è¿™æ ·å†™,vc6,vc2010 éƒ½æ˜¯å¦‚æ­¤//å°±æ˜¯å°† PASCAL æˆ–è€… stdcall æ”¾åˆ°å‡½æ•°åçš„æ‹¬å·ä¸­ 
+SOCKET (PASCAL *_socket)(int,int,int); //vc ÒªÕâÑùĞ´,vc6,vc2010 ¶¼ÊÇÈç´Ë//¾ÍÊÇ½« PASCAL »òÕß stdcall ·Åµ½º¯ÊıÃûµÄÀ¨ºÅÖĞ 
 int  (PASCAL *_WSAStartup)(WORD,LPWSADATA);
 unsigned long  (PASCAL*_inet_addr)(const char*);
 u_short  (PASCAL*_htons)(u_short);
@@ -95,15 +95,15 @@ int ConnectIP(SOCKET so, char * ip, int port)
   SockAddr.sin_addr.s_addr = _inet_addr(ip);
 
   //if (_connect(so, (struct sockaddr *)(&SockAddr), sizeof(SOCKADDR_IN)) == SOCKET_ERROR) 
-  if (_connect(so, &SockAddr, sizeof(SOCKADDR_IN)) == SOCKET_ERROR) //å…¶å®æ˜¯ä¸ç”¨è½¬æ¢çš„ 
+  if (_connect(so, &SockAddr, sizeof(SOCKADDR_IN)) == SOCKET_ERROR) //ÆäÊµÊÇ²»ÓÃ×ª»»µÄ 
   {
   	PrintError(0);
-	err = _WSAGetLastError(); //å…¶å®è¿™ä¸ªå’Œ GetLastError æ˜¯ä¸€æ ·çš„
-    //ShowMessageFmt('connect socket errorï¼Œ[%d]', [WSAGetLastError]);
+	err = _WSAGetLastError(); //ÆäÊµÕâ¸öºÍ GetLastError ÊÇÒ»ÑùµÄ
+    //ShowMessageFmt('connect socket error£¬[%d]', [WSAGetLastError]);
     MessageBox(0, "connect socket error", "", 0);
     Result = 0;
     
-    //int err = _WSAGetLastError();//å¦‚æœå‰é¢è°ƒç”¨äº†åˆ«çš„ api è¿™é‡Œæ˜¯å–åˆ° 0 çš„,è€Œä¸æ˜¯é”™è¯¯ä¿¡æ¯ç  
+    //int err = _WSAGetLastError();//Èç¹ûÇ°Ãæµ÷ÓÃÁË±ğµÄ api ÕâÀïÊÇÈ¡µ½ 0 µÄ,¶ø²»ÊÇ´íÎóĞÅÏ¢Âë 
     
     PrintError(err);
     
@@ -116,7 +116,7 @@ int ConnectIP(SOCKET so, char * ip, int port)
 
 }//
 
-//clq è¿™æ˜¯æˆ‘æ–°åŠ çš„å‡½æ•°ï¼Œç›®çš„æ˜¯å¯ä»¥æ ¹æ®åŸŸåæ¥è®¿é—®ï¼Œå¹¶ä¸”åŸæ¥çš„ä»£ç åªèƒ½è®¿é—®å±€åŸŸç½‘
+//clq ÕâÊÇÎÒĞÂ¼ÓµÄº¯Êı£¬Ä¿µÄÊÇ¿ÉÒÔ¸ù¾İÓòÃûÀ´·ÃÎÊ£¬²¢ÇÒÔ­À´µÄ´úÂëÖ»ÄÜ·ÃÎÊ¾ÖÓòÍø
 
 int ConnectHost(SOCKET so, char * host, int port)
 {
@@ -128,11 +128,11 @@ int ConnectHost(SOCKET so, char * host, int port)
 	struct sockaddr_in addr;
 	memset(&addr, 0, sizeof(addr));
 	
-	// Fill in the address if possible//å…ˆå°è¯•å½“åšIPæ¥è§£æ
+	// Fill in the address if possible//ÏÈ³¢ÊÔµ±×öIPÀ´½âÎö
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = _inet_addr(address);
 	
-	// Was the string a valid IP address?//å¦‚æœä¸æ˜¯IPå°±å½“åšåŸŸåæ¥è§£æ
+	// Was the string a valid IP address?//Èç¹û²»ÊÇIP¾Íµ±×öÓòÃûÀ´½âÎö
 	if (addr.sin_addr.s_addr == -1)
 	{
 		// No, so get the actual IP address of the host name specified
@@ -152,7 +152,7 @@ int ConnectHost(SOCKET so, char * host, int port)
 
 	addr.sin_port = _htons(port);
 	
-	//è¿”å›ï¼š-1 è¿æ¥å¤±è´¥ï¼›0 è¿æ¥æˆåŠŸ
+	//·µ»Ø£º-1 Á¬½ÓÊ§°Ü£»0 Á¬½Ó³É¹¦
 	if (_connect(so, (struct sockaddr *)&addr, sizeof(addr)) == 0)
 	{
 		is_connect = 1;//true;
@@ -160,16 +160,16 @@ int ConnectHost(SOCKET so, char * host, int port)
 	else
 	{
 		is_connect = 0;//false;
-		//è¿æ¥å¤±è´¥
+		//Á¬½ÓÊ§°Ü
 		//printfd3("WSAGetLastError:%d, WSAEWOULDBLOCK:%d\r\n", WSAGetLastError()-WSABASEERR, WSAEWOULDBLOCK-WSABASEERR);
 		
 	  	PrintError(0);
-		err = _WSAGetLastError(); //å…¶å®è¿™ä¸ªå’Œ GetLastError æ˜¯ä¸€æ ·çš„
-	    //ShowMessageFmt('connect socket errorï¼Œ[%d]', [WSAGetLastError]);
+		err = _WSAGetLastError(); //ÆäÊµÕâ¸öºÍ GetLastError ÊÇÒ»ÑùµÄ
+	    //ShowMessageFmt('connect socket error£¬[%d]', [WSAGetLastError]);
 	    MessageBox(0, "connect socket error", "", 0);
 	    is_connect = 0;
 	    
-	    //int err = _WSAGetLastError();//å¦‚æœå‰é¢è°ƒç”¨äº†åˆ«çš„ api è¿™é‡Œæ˜¯å–åˆ° 0 çš„,è€Œä¸æ˜¯é”™è¯¯ä¿¡æ¯ç  
+	    //int err = _WSAGetLastError();//Èç¹ûÇ°Ãæµ÷ÓÃÁË±ğµÄ api ÕâÀïÊÇÈ¡µ½ 0 µÄ,¶ø²»ÊÇ´íÎóĞÅÏ¢Âë 
 	    
 	    PrintError(err);
 	    
@@ -198,8 +198,8 @@ FARPROC WINAPI LoadFunction(HINSTANCE h, LPCSTR fun_name)
 
 void LoadFunctions_Socket()
 {
-	//HINSTANCE hs = LoadLibrary("wsock32.dll"); //æ ¹æ®ä¸åŒçš„ç¼–è¯‘ç¯å¢ƒ,æœ‰å¯èƒ½è¦ä» LoadLibrary æ”¹æˆ LoadLibraryA
-	HINSTANCE hs = LoadLibraryA("wsock32.dll"); //æ ¹æ®ä¸åŒçš„ç¼–è¯‘ç¯å¢ƒ,æœ‰å¯èƒ½è¦ä» LoadLibrary æ”¹æˆ LoadLibraryA
+	//HINSTANCE hs = LoadLibrary("wsock32.dll"); //¸ù¾İ²»Í¬µÄ±àÒë»·¾³,ÓĞ¿ÉÄÜÒª´Ó LoadLibrary ¸Ä³É LoadLibraryA
+	HINSTANCE hs = LoadLibraryA("wsock32.dll"); //¸ù¾İ²»Í¬µÄ±àÒë»·¾³,ÓĞ¿ÉÄÜÒª´Ó LoadLibrary ¸Ä³É LoadLibraryA
 	
 	if (hs == 0) printf("load wsock32.dll error\r\n", hs);
 	else printf("load wsock32.dll ok\r\n", hs);
@@ -210,7 +210,7 @@ void LoadFunctions_Socket()
 	if (_socket == 0) printf("load _socket error\r\n", hs);
 	
 	//-------------------------------------------------- 
-	//ç›´æ¥è£…è½½å„ä¸ª dll å‡½æ•° 
+	//Ö±½Ó×°ÔØ¸÷¸ö dll º¯Êı 
 	_socket = LoadFunction(hs, "socket");
 	_WSAStartup = LoadFunction(hs, "WSAStartup");
 	_inet_addr = LoadFunction(hs, "inet_addr");
@@ -228,10 +228,10 @@ void LoadFunctions_Socket()
 
 }
 
-// ç³»ç»Ÿé”™è¯¯ä¿¡æ¯æç¤º
+// ÏµÍ³´íÎóĞÅÏ¢ÌáÊ¾
 void PrintError(DWORD last_err)
 {
-    //è¿›è¡Œå‡ºé”™ã€‚
+    //½øĞĞ³ö´í¡£
     //if (!CreateDirectory(_T("c:\\"),0))
     {
         char buf[512];//char buf[128];
@@ -242,25 +242,25 @@ void PrintError(DWORD last_err)
         
         dw = last_err;//GetLastError();
         
-        if (dw == 0) dw = GetLastError(); //å®é™…ä¸Šæ˜¯å¯ä»¥ä»£æ›¿ WSAGetLastError çš„ 
+        if (dw == 0) dw = GetLastError(); //Êµ¼ÊÉÏÊÇ¿ÉÒÔ´úÌæ WSAGetLastError µÄ 
         
         //dw = 5;//10035;//6000054;
         
         if (dw == 0) return;
         
         FormatMessage (
-            FORMAT_MESSAGE_FROM_SYSTEM,//FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, //FORMAT_MESSAGE_ALLOCATE_BUFFER æ˜¯æŒ‡è¦åˆ†é…å†…å­˜ 
+            FORMAT_MESSAGE_FROM_SYSTEM,//FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, //FORMAT_MESSAGE_ALLOCATE_BUFFER ÊÇÖ¸Òª·ÖÅäÄÚ´æ 
             NULL,
             dw,
             MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
             (LPTSTR) &buf,//(LPTSTR) &lpMsgBuf,
-            500,//0, //å› ä¸ºæ˜¯è‡ªå·±åˆ†é…çš„å†…å­˜,æ‰€ä»¥è¦æŒ‡å‡ºåˆ†é…äº†å¤šå¤§ 
+            500,//0, //ÒòÎªÊÇ×Ô¼º·ÖÅäµÄÄÚ´æ,ËùÒÔÒªÖ¸³ö·ÖÅäÁË¶à´ó 
 			NULL );
             
-        printf("PrintError(å‡ºé”™ç =%d):%s\r\n", dw, buf); //å¥‡æ€ª,è¿™é‡Œå°±æ˜¯ä¸å¯¹//æ˜¯å€’æ•°ç¬¬ 2 ä¸ª å‚æ•°çš„é—®é¢˜ 
+        printf("PrintError(³ö´íÂë=%d):%s\r\n", dw, buf); //Ææ¹Ö,ÕâÀï¾ÍÊÇ²»¶Ô//ÊÇµ¹ÊıµÚ 2 ¸ö ²ÎÊıµÄÎÊÌâ 
             
         FormatMessage (
-            FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, //FORMAT_MESSAGE_ALLOCATE_BUFFER æ˜¯æŒ‡è¦åˆ†é…å†…å­˜ 
+            FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, //FORMAT_MESSAGE_ALLOCATE_BUFFER ÊÇÖ¸Òª·ÖÅäÄÚ´æ 
             NULL,
             dw,
             MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
@@ -268,22 +268,22 @@ void PrintError(DWORD last_err)
             0, NULL );
             
  		wsprintf(buf,
-                    "å‡ºé”™ä¿¡æ¯ (å‡ºé”™ç ï¼%d): %s",
+                    "³ö´íĞÅÏ¢ (³ö´íÂë£½%d): %s",
 					dw, lpMsgBuf);             
             
-        printf("PrintError(å‡ºé”™ç =%d):%s\r\n", dw, lpMsgBuf);
-        //printf("PrintError(å‡ºé”™ç =%d):%s\r\n", dw, &buf); //å¥‡æ€ª,è¿™ä¸ªæ˜¯ä¸å¯¹çš„ 
-        printf("PrintError(å‡ºé”™ç =%d):%s\r\n", dw, buf);
+        printf("PrintError(³ö´íÂë=%d):%s\r\n", dw, lpMsgBuf);
+        //printf("PrintError(³ö´íÂë=%d):%s\r\n", dw, &buf); //Ææ¹Ö,Õâ¸öÊÇ²»¶ÔµÄ 
+        printf("PrintError(³ö´íÂë=%d):%s\r\n", dw, buf);
             
         LocalFree(lpMsgBuf);
         
-        //è¾“å‡ºæç¤º
+        //Êä³öÌáÊ¾
         //OutputDebugString(szBuf);
     }
 }//
 
 
-//å°šæœªç²¾æµ‹è¯•,å¯èƒ½æœ‰è¯¯
+//ÉĞÎ´¾«²âÊÔ,¿ÉÄÜÓĞÎó
 int SendBuf(SOCKET so, char * s, int len)
 {
   int r = 0;
@@ -308,7 +308,7 @@ int SendBuf(SOCKET so, char * s, int len)
 
     count++;
 
-    if (count>10) //è¶…è¿‡å¤šå°‘æ¬¡å°±ä¸å‘é€äº† 
+    if (count>10) //³¬¹ı¶àÉÙ´Î¾Í²»·¢ËÍÁË 
     {
       MessageBox(0, "send error", "", 0);
 
@@ -321,10 +321,10 @@ int SendBuf(SOCKET so, char * s, int len)
 
 }//
 
-//æ³¨æ„,è¿”å›çš„å­—ç¬¦ä¸²è¦è‡ªå·±é‡Šæ”¾ 
+//×¢Òâ,·µ»ØµÄ×Ö·û´®Òª×Ô¼ºÊÍ·Å 
 //lstring RecvBuf(SOCKET so)
-//ç®—äº†,è¿˜æ˜¯ä¼ å¯è‡ªåŠ¨é‡Šæ”¾çš„å­—ç¬¦ä¸²è¿›å»æ–¹ä¾¿ç‚¹ 
-//void RecvBuf(SOCKET so, lstring * buf)//ç”¨è¿™ä¸ªæ ¼å¼ä¹Ÿå¯ä»¥,ä¸è¿‡ä¸å…¶ä»–è¯­è¨€ä¸é€šç”¨ 
+//ËãÁË,»¹ÊÇ´«¿É×Ô¶¯ÊÍ·ÅµÄ×Ö·û´®½øÈ¥·½±ãµã 
+//void RecvBuf(SOCKET so, lstring * buf)//ÓÃÕâ¸ö¸ñÊ½Ò²¿ÉÒÔ,²»¹ıÓëÆäËûÓïÑÔ²»Í¨ÓÃ 
 lstring * RecvBuf(SOCKET so, struct MemPool * pool)
 {
   char buf[1024+1];
@@ -337,7 +337,7 @@ lstring * RecvBuf(SOCKET so, struct MemPool * pool)
   memset(&buf, 0, sizeof(buf));
 
 
-  r = _recv(so, buf, sizeof(buf)-1, 0); //ç•™ä¸‹ä¸€ä¸ª #0 ç»“å°¾
+  r = _recv(so, buf, sizeof(buf)-1, 0); //ÁôÏÂÒ»¸ö #0 ½áÎ²
   if (r > 0) 
   {
     //SetLength(s, r);
@@ -346,11 +346,11 @@ lstring * RecvBuf(SOCKET so, struct MemPool * pool)
     LString_AppendCString(s, buf, r);
   }
 
-  if (r == 0) //ä¸€èˆ¬éƒ½æ˜¯æ–­å¼€äº†
+  if (r == 0) //Ò»°ã¶¼ÊÇ¶Ï¿ªÁË
   {
     MessageBox(0, "recv error.[socket close]", "", 0);
 
-	//return String(""); //ä¸åº”è¯¥å†ç”Ÿæˆä¸€ä¸ªæ–°çš„
+	//return String(""); //²»Ó¦¸ÃÔÙÉú³ÉÒ»¸öĞÂµÄ
 	return s;
   }
 
@@ -359,7 +359,7 @@ lstring * RecvBuf(SOCKET so, struct MemPool * pool)
 }//
 
 
-//æ˜¯å¦å¯è¯»å–,æ—¶é—´//ç«‹å³è¿”å› 
+//ÊÇ·ñ¿É¶ÁÈ¡,Ê±¼ä//Á¢¼´·µ»Ø 
 int SelectRead(SOCKET so)
 {
   fd_set fd_read; //fd_read:TFDSet;
@@ -368,17 +368,17 @@ int SelectRead(SOCKET so)
   int Result = 0;
 
   FD_ZERO( &fd_read );
-  FD_SET(so, &fd_read ); //ä¸ªæ•°å—é™äº FD_SETSIZE 
+  FD_SET(so, &fd_read ); //¸öÊıÊÜÏŞÓÚ FD_SETSIZE 
 
-  timeout.tv_sec = 0; //ç§’
-  timeout.tv_usec = 500;  //æ¯«ç§’,ä¸å¯¹æ˜¯ å¾®ç§’ 
-  timeout.tv_usec = 0;  //æ¯«ç§’,ä¸å¯¹æ˜¯ å¾®ç§’
+  timeout.tv_sec = 0; //Ãë
+  timeout.tv_usec = 500;  //ºÁÃë,²»¶ÔÊÇ Î¢Ãë 
+  timeout.tv_usec = 0;  //ºÁÃë,²»¶ÔÊÇ Î¢Ãë
   
-  	//linux ç¬¬ä¸€ä¸ªå‚æ•°ä¸€å®šè¦èµ‹å€¼
+  	//linux µÚÒ»¸ö²ÎÊıÒ»¶¨Òª¸³Öµ
 	////int r = ::select(socket_handle+1, &fd_read, NULL, NULL, &l_timeout);
 
-  //if select( 0, &fd_read, nil, nil, &timeout ) > 0 then //è‡³å°‘æœ‰1ä¸ªç­‰å¾…Acceptçš„connection
-  if (_select( so+1, &fd_read, NULL, NULL, &timeout ) > 0) //è‡³å°‘æœ‰1ä¸ªç­‰å¾…Acceptçš„connection
+  //if select( 0, &fd_read, nil, nil, &timeout ) > 0 then //ÖÁÉÙÓĞ1¸öµÈ´ıAcceptµÄconnection
+  if (_select( so+1, &fd_read, NULL, NULL, &timeout ) > 0) //ÖÁÉÙÓĞ1¸öµÈ´ıAcceptµÄconnection
     Result = 1;
     
 
@@ -386,7 +386,7 @@ int SelectRead(SOCKET so)
 
 }//
 
-//æ˜¯å¦å¯è¯»å–,æ—¶é—´//è¶…æ—¶è¿”å›,å•ä½ä¸ºç§’ 
+//ÊÇ·ñ¿É¶ÁÈ¡,Ê±¼ä//³¬Ê±·µ»Ø,µ¥Î»ÎªÃë 
 int SelectRead_Timeout(SOCKET so, int sec)
 {
   fd_set fd_read; //fd_read:TFDSet;
@@ -395,18 +395,18 @@ int SelectRead_Timeout(SOCKET so, int sec)
   int Result = 0;
 
   FD_ZERO( &fd_read );
-  FD_SET(so, &fd_read ); //ä¸ªæ•°å—é™äº FD_SETSIZE 
+  FD_SET(so, &fd_read ); //¸öÊıÊÜÏŞÓÚ FD_SETSIZE 
 
-  //timeout.tv_sec = 0; //ç§’
-  timeout.tv_sec = sec; //ç§’
-  //timeout.tv_usec = 500;  //æ¯«ç§’,ä¸å¯¹æ˜¯ å¾®ç§’ 
-  timeout.tv_usec = 0;  //æ¯«ç§’,ä¸å¯¹æ˜¯ å¾®ç§’
+  //timeout.tv_sec = 0; //Ãë
+  timeout.tv_sec = sec; //Ãë
+  //timeout.tv_usec = 500;  //ºÁÃë,²»¶ÔÊÇ Î¢Ãë 
+  timeout.tv_usec = 0;  //ºÁÃë,²»¶ÔÊÇ Î¢Ãë
   
-  	//linux ç¬¬ä¸€ä¸ªå‚æ•°ä¸€å®šè¦èµ‹å€¼
+  	//linux µÚÒ»¸ö²ÎÊıÒ»¶¨Òª¸³Öµ
 	////int r = ::select(socket_handle+1, &fd_read, NULL, NULL, &l_timeout);
 
-  //if select( 0, &fd_read, nil, nil, &timeout ) > 0 then //è‡³å°‘æœ‰1ä¸ªç­‰å¾…Acceptçš„connection
-  if (_select( so+1, &fd_read, NULL, NULL, &timeout ) > 0) //è‡³å°‘æœ‰1ä¸ªç­‰å¾…Acceptçš„connection
+  //if select( 0, &fd_read, nil, nil, &timeout ) > 0 then //ÖÁÉÙÓĞ1¸öµÈ´ıAcceptµÄconnection
+  if (_select( so+1, &fd_read, NULL, NULL, &timeout ) > 0) //ÖÁÉÙÓĞ1¸öµÈ´ıAcceptµÄconnection
     Result = 1;
     
 
@@ -414,36 +414,36 @@ int SelectRead_Timeout(SOCKET so, int sec)
 
 }//
 
-//è®¾ç½®ä¸ºéé˜»å¡æ¨¡å¼ 
+//ÉèÖÃÎª·Ç×èÈûÄ£Ê½ 
 void SetNoBlock(SOCKET so)
 {
-	u_long arg = 0; //è¿™é‡Œæœ‰ä¸ªé—®é¢˜,32ä½ä¸‹æ˜¯ 4 å­—èŠ‚,64 ä½ä¸‹å¯èƒ½æ˜¯ 8 å­—èŠ‚,æ‰€ä»¥åœ¨ 64 ä½ç¯å¢ƒä¸‹å¤§å®¶å†è‡ªå·±æµ‹è¯•ä¸‹ 
+	u_long arg = 0; //ÕâÀïÓĞ¸öÎÊÌâ,32Î»ÏÂÊÇ 4 ×Ö½Ú,64 Î»ÏÂ¿ÉÄÜÊÇ 8 ×Ö½Ú,ËùÒÔÔÚ 64 Î»»·¾³ÏÂ´ó¼ÒÔÙ×Ô¼º²âÊÔÏÂ 
 	
-	//é¦–å…ˆï¼Œè®¾ç½®é€šè®¯ä¸ºéé˜»å¡æ¨¡å¼
+	//Ê×ÏÈ£¬ÉèÖÃÍ¨Ñ¶Îª·Ç×èÈûÄ£Ê½
 	arg = 1;
 	//ioctlsocket(so, FIONBIO, &arg);
 	_ioctlsocket(so, FIONBIO, &arg);
 
 }//
 
-//è®¾ç½®å‘é€è¶…æ—¶
+//ÉèÖÃ·¢ËÍ³¬Ê±
 void SetTimeout_send(SOCKET so, int sec)
 {
 	struct timeval timeout; // : TTimeVal;
 	
-	timeout.tv_sec = sec; //ç§’
-	timeout.tv_usec = 0;  //æ¯«ç§’,ä¸å¯¹æ˜¯ å¾®ç§’
+	timeout.tv_sec = sec; //Ãë
+	timeout.tv_usec = 0;  //ºÁÃë,²»¶ÔÊÇ Î¢Ãë
 	
 	_setsockopt(so, SOL_SOCKET,SO_SNDTIMEO, (char *)&timeout, sizeof(struct timeval));
 }//
 
-//è®¾ç½®æ¥æ”¶è¶…æ—¶
+//ÉèÖÃ½ÓÊÕ³¬Ê±
 void SetTimeout_recv(SOCKET so, int sec)
 {
 	struct timeval timeout; // : TTimeVal;
 	
-	timeout.tv_sec = sec; //ç§’
-	timeout.tv_usec = 0;  //æ¯«ç§’,ä¸å¯¹æ˜¯ å¾®ç§’
+	timeout.tv_sec = sec; //Ãë
+	timeout.tv_usec = 0;  //ºÁÃë,²»¶ÔÊÇ Î¢Ãë
 		
 	_setsockopt(so, SOL_SOCKET,SO_RCVTIMEO, (char *)&timeout, sizeof(struct timeval));
 }//

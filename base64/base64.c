@@ -1,19 +1,19 @@
 
 
-//Ëã·¨À´×Ô http://www.cnblogs.com/IwAdream/p/6088283.html, ¼ÓÁËÎÒ×Ô¼ºµÄ×¢ÊÍ 
-//»ù±¾ÉÏ¾ÍÊÇ¿¿ÒÆÎ»Ëã·¨½« 3 ¸ö×Ö½Ú±ä³É 4 ¸ö×Ö½Ú,»òÕß½« 4 ¸ö×Ö½Ú±ä³É Èı¸ö×Ö½Ú
-//¿ÉÒÔ¿´ https://zh.wikipedia.org/wiki/Base64 ÖĞµÄ±í¸ñÍ¼Ê¾ 
-//Í¼Æ¬¿ÉÒÔÔÚ±¾Ô´ÂëÖĞ¸½´øµÄ base64.png ÖĞ¿´µ½[Èç¹û×ªÔØµÄÍøÓÑÒ²×ªÔØÓĞÍ¼Æ¬µÄ»°¾Í»áÓĞ] 
-//ÆäÊµÒ»ÕÅÍ¼¾ÍÄÜÃ÷°×ËüµÄÔ­Àí 
-//°Ñ±äÁ¿ÌáÇ°ÒÔ±ã¸ü¶à±àÒëÆ÷Ö§³Ö 
+//ç®—æ³•æ¥è‡ª http://www.cnblogs.com/IwAdream/p/6088283.html, åŠ äº†æˆ‘è‡ªå·±çš„æ³¨é‡Š 
+//åŸºæœ¬ä¸Šå°±æ˜¯é ç§»ä½ç®—æ³•å°† 3 ä¸ªå­—èŠ‚å˜æˆ 4 ä¸ªå­—èŠ‚,æˆ–è€…å°† 4 ä¸ªå­—èŠ‚å˜æˆ ä¸‰ä¸ªå­—èŠ‚
+//å¯ä»¥çœ‹ https://zh.wikipedia.org/wiki/Base64 ä¸­çš„è¡¨æ ¼å›¾ç¤º 
+//å›¾ç‰‡å¯ä»¥åœ¨æœ¬æºç ä¸­é™„å¸¦çš„ base64.png ä¸­çœ‹åˆ°[å¦‚æœè½¬è½½çš„ç½‘å‹ä¹Ÿè½¬è½½æœ‰å›¾ç‰‡çš„è¯å°±ä¼šæœ‰] 
+//å…¶å®ä¸€å¼ å›¾å°±èƒ½æ˜ç™½å®ƒçš„åŸç† 
+//æŠŠå˜é‡æå‰ä»¥ä¾¿æ›´å¤šç¼–è¯‘å™¨æ”¯æŒ 
 
 #ifndef _BASE64_H_
 #define _BASE64_H_
 
 #include <stdio.h>
-#include <stdint.h> //clq Õâ¸öÆäÊµÒ²²»ÊÇ±ØĞëµÄ 
+#include <stdint.h> //clq è¿™ä¸ªå…¶å®ä¹Ÿä¸æ˜¯å¿…é¡»çš„ 
 #include <string.h>
-#include <malloc.h> //clq ¿ÉÒÔ²»ÓÃ,ÓĞÊ±»á³åÍ» 
+#include <malloc.h> //clq å¯ä»¥ä¸ç”¨,æœ‰æ—¶ä¼šå†²çª 
  
 char base64_table[] = {
      'A','B','C','D','E','F','G','H','I','J',
@@ -82,7 +82,7 @@ int _base64_encode(char *in, int inlen, uint8_t *out) {
     char *in_block;
     uint8_t *out_block;
 	char temp[3];
-	int outlen = 0; //clq add ¼ÓÒ»¸ö½âÂëºóµÄÊı¾İ³¤¶È
+	int outlen = 0; //clq add åŠ ä¸€ä¸ªè§£ç åçš„æ•°æ®é•¿åº¦
     int i = 0;
  
     out_block = out;
@@ -92,7 +92,7 @@ int _base64_encode(char *in, int inlen, uint8_t *out) {
         memset(temp, 0, 3);
         memcpy(temp, in_block, i + 3 < inlen ? 3 : inlen - i);
         memset(out_block, 0, 4);
-        //memset(out_block, '=', 4); //ºÃÏóÒ²²»ÓÃ 
+        //memset(out_block, '=', 4); //å¥½è±¡ä¹Ÿä¸ç”¨ 
  
         out_block[0] = (temp[0] >> 2) & 0x3f;
         out_block[1] = ((temp[0] << 4) & 0x30) | ((temp[1] >> 4) & 0x0f);
@@ -103,7 +103,7 @@ int _base64_encode(char *in, int inlen, uint8_t *out) {
         out_block += 4;
         in_block += 3;
         
-        outlen += 4; //clq add ¼ÓÒ»¸ö±àÂëºóµÄÊı¾İ³¤¶È
+        outlen += 4; //clq add åŠ ä¸€ä¸ªç¼–ç åçš„æ•°æ®é•¿åº¦
     }
  
     base64_map(out, ((inlen * 4) - 1) / 3 + 1);
@@ -115,7 +115,7 @@ int _base64_decode(char *in, int inlen, uint8_t *out) {
     char *in_block;
     uint8_t *out_block;
     char temp[4];
-	int outlen = 0; //clq add ¼ÓÒ»¸ö½âÂëºóµÄÊı¾İ³¤¶È
+	int outlen = 0; //clq add åŠ ä¸€ä¸ªè§£ç åçš„æ•°æ®é•¿åº¦
 	int i = 0;
  
     out_block = out;
@@ -136,17 +136,17 @@ int _base64_decode(char *in, int inlen, uint8_t *out) {
         out_block += 3;
         in_block +=4;
         
-		outlen += 3; //clq add ¼ÓÒ»¸ö½âÂëºóµÄÊı¾İ³¤¶È//Õâ¸ö³¤¶ÈÆäÊµ²»¶Ô,ÒòÎª²»Ò»¶¨ÊÇ 3 µÄ±¶Êı
-		//if (temp[3] == '=') outlen -= 1; //clq add ÓĞÒ»¸öµÈºÅ¾Í±íÊ¾²¹³äÁËÒ»¸ö×Ö½Ú//ÓÅ»¯·Åµ½×îºóÈ¥ºÃÁË 
-		//if (temp[3] == '=') outlen -= 1; //clq add ÓĞÒ»¸öµÈºÅ¾Í±íÊ¾²¹³äÁËÒ»¸ö×Ö½Ú//ÓÅ»¯·Åµ½×îºóÈ¥ºÃÁË 
+		outlen += 3; //clq add åŠ ä¸€ä¸ªè§£ç åçš„æ•°æ®é•¿åº¦//è¿™ä¸ªé•¿åº¦å…¶å®ä¸å¯¹,å› ä¸ºä¸ä¸€å®šæ˜¯ 3 çš„å€æ•°
+		//if (temp[3] == '=') outlen -= 1; //clq add æœ‰ä¸€ä¸ªç­‰å·å°±è¡¨ç¤ºè¡¥å……äº†ä¸€ä¸ªå­—èŠ‚//ä¼˜åŒ–æ”¾åˆ°æœ€åå»å¥½äº† 
+		//if (temp[3] == '=') outlen -= 1; //clq add æœ‰ä¸€ä¸ªç­‰å·å°±è¡¨ç¤ºè¡¥å……äº†ä¸€ä¸ªå­—èŠ‚//ä¼˜åŒ–æ”¾åˆ°æœ€åå»å¥½äº† 
 		
     }
     
-	if (in[inlen-1] == '=') outlen -= 1; //clq add ÓĞÒ»¸öµÈºÅ¾Í±íÊ¾²¹³äÁËÒ»¸ö×Ö½Ú//ÓÅ»¯·Åµ½×îºóÈ¥ºÃÁË 
-	if (in[inlen-2] == '=') outlen -= 1; //clq add ÓĞÒ»¸öµÈºÅ¾Í±íÊ¾²¹³äÁËÒ»¸ö×Ö½Ú//ÓÅ»¯·Åµ½×îºóÈ¥ºÃÁË 
+	if (in[inlen-1] == '=') outlen -= 1; //clq add æœ‰ä¸€ä¸ªç­‰å·å°±è¡¨ç¤ºè¡¥å……äº†ä¸€ä¸ªå­—èŠ‚//ä¼˜åŒ–æ”¾åˆ°æœ€åå»å¥½äº† 
+	if (in[inlen-2] == '=') outlen -= 1; //clq add æœ‰ä¸€ä¸ªç­‰å·å°±è¡¨ç¤ºè¡¥å……äº†ä¸€ä¸ªå­—èŠ‚//ä¼˜åŒ–æ”¾åˆ°æœ€åå»å¥½äº† 
 
     //return 0;
-    return outlen; //clq add ¼ÓÒ»¸ö½âÂëºóµÄÊı¾İ³¤¶È 
+    return outlen; //clq add åŠ ä¸€ä¸ªè§£ç åçš„æ•°æ®é•¿åº¦ 
 }
  
  
