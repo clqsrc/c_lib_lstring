@@ -201,13 +201,13 @@ void LoadFunctions_Socket()
 	//HINSTANCE hs = LoadLibrary("wsock32.dll"); //根据不同的编译环境,有可能要从 LoadLibrary 改成 LoadLibraryA
 	HINSTANCE hs = LoadLibraryA("wsock32.dll"); //根据不同的编译环境,有可能要从 LoadLibrary 改成 LoadLibraryA
 	
-	if (hs == 0) printf("load wsock32.dll error\r\n", hs);
-	else printf("load wsock32.dll ok\r\n", hs);
+	if (hs == 0) printf("load wsock32.dll error\r\n");
+	else printf("load wsock32.dll ok\r\n");
 	
 	_socket = GetProcAddress(hs, "socket");
 	
 	printf("_socket:%d\r\n", _socket);
-	if (_socket == 0) printf("load _socket error\r\n", hs);
+	if (_socket == 0) printf("load _socket error\r\n");
 	
 	//-------------------------------------------------- 
 	//直接装载各个 dll 函数 
