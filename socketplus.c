@@ -321,6 +321,11 @@ int SendBuf(SOCKET so, char * s, int len)
 
 }//
 
+int Recv(SOCKET so, char* buf, int size)
+{
+	return _recv(so, buf, size, 0);
+}
+
 //注意,返回的字符串要自己释放 
 //lstring RecvBuf(SOCKET so)
 //算了,还是传可自动释放的字符串进去方便点 
